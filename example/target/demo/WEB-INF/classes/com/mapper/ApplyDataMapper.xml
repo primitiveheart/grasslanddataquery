@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ApplyDataMapper">
+    <resultMap id="result" type="applyData">
+        <result property="id" column="id"/>
+        <result property="coordinate" column="coordinate"/>
+        <result property="dataType" column="data_type"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="userId" column="userId" />
+    </resultMap>
+
+    <sql id="base_column_list">
+        id, coordinate, data_type, start_time, end_time, status, userId
+    </sql>
+
+    <insert id="addApplyData" parameterType="applyData">
+        INSERT INTO applydatas(coordinate, data_type, start_time, end_time, status, userId) VALUES(#{coordinate}, #{dataType}, #{startTime}, #{endTime}, #{status}, #{userId})
+    </insert>
+
+</mapper>
