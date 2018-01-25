@@ -10,6 +10,7 @@
         <script src="resources/js/jquery-3.2.1.js"></script>
         <script src="resources/js/semantic.min.js"></script>
         <script src="resources/js/plugins/calendar.min.js"></script>
+
     </head>
     <body>
         <#--引入页面头部-->
@@ -55,7 +56,7 @@
                         <select multiple="" name="weather" class="ui weather search fluid normal dropdown">
                             <option  value="tempature_min">最低温度(月)</option>
                             <option  value="tempature_max">最高温度(月)</option>
-                            <option  value="tempature_average">平均温度(月</option>
+                            <option  value="tempature_average">平均温度(月)</option>
                             <option  value="sumRainfall">累积降雨量(月)</option>
                             <option  value="solarRadition">太阳辐射(月)</option>
                         </select>
@@ -63,7 +64,10 @@
 
                     <div class="ui small header">土壤数据</div>
                     <div class="field">
-                        <div class="ui checkbox"><input type="checkbox"  name="soil" value="solarType_*"/>*土壤类型（亚类）</div>
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="soil" value="solarType_*"/>
+                            <label>*土壤类型（亚类）</label>
+                        </div>
                     </div>
 
                     <div class="ui small header">植被数据</div>

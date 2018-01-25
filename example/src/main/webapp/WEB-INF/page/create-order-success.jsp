@@ -12,6 +12,7 @@
 		//转向语句
 		response.setHeader("Refresh","3;URL=query.html");
 	 %>
+
 </body>
 <script>
 	var time = 4;

@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS applydatas(
   data_type VARCHAR(500) NOT NULL ,
   start_time VARCHAR(10) NOT NULL ,
   end_time VARCHAR(10) NOT NULL ,
+  create_time TIMESTAMP NOT NULL ,
+  update_time TIMESTAMP ,
   status VARCHAR(10) DEFAULT '审核中',
   userId int(11),
   FOREIGN KEY(userId) REFERENCES users(id)

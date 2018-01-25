@@ -45,6 +45,12 @@ public class QueryController {
         return "query";
     }
 
+    /**
+     * 把前端的提交的数据保存到数据库中
+     * @param request
+     * @param queryData
+     * @return
+     */
     @RequestMapping(value = "saveApplyData.html", method = RequestMethod.POST)
     public String saveApplyData(HttpServletRequest request, QueryData queryData){
         HttpSession session = request.getSession();

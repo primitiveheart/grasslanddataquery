@@ -1,6 +1,8 @@
 package com.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by admin on 2018/1/24.
@@ -15,6 +17,10 @@ public class ApplyData implements Serializable {
     private String startTime;
 
     private String endTime;
+
+    private Timestamp createTime;
+
+    private Timestamp updateTime;
 
     private String status;
 
@@ -77,5 +83,19 @@ public class ApplyData implements Serializable {
         this.userId = userId;
     }
 
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
 
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 }

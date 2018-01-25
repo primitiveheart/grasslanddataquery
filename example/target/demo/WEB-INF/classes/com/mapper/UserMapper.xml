@@ -26,6 +26,10 @@
         SELECT <include refid="base_column_list"/> FROM users WHERE username = #{username};
     </select>
 
+    <select id="getUserById" parameterType="Integer" resultMap="result">
+        SELECT <include refid="base_column_list"/> FROM users WHERE id = #{id};
+    </select>
+
     <delete id="deleteByUsername" parameterType="String">
         DELETE FROM users WHERE username = #{username};
     </delete>
