@@ -23,8 +23,11 @@
 <#--页面内容-->
 <div class="content_">
 
-        <table id="applyDataDisplay" width="100%" class="display cell-border" cellspacing="0">
-            <thead>
+
+        <h4 class="ui top centered attached block header">管理员给用户授权</h4>
+        <div class="ui bottom attached segment">
+            <table id="applyDataDisplay" width="100%" class="display cell-border" cellspacing="0">
+                <thead>
                 <tr class="nowrap">
                     <th>用户名</th>
                     <th>开始的年份</th>
@@ -36,8 +39,9 @@
                     <th>更新的时间</th>
                     <th>操作</th>
                 </tr>
-            </thead>
-        </table>
+                </thead>
+            </table>
+        </div>
 
 </div>
 <#--引入页面底部-->

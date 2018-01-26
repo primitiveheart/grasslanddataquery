@@ -22,7 +22,8 @@
 <#include "/commons/user-info.ftl">
 <#--页面内容-->
 <div class="content_">
-
+    <h4 class="ui top centered attached block header">查看申请的结果</h4>
+    <div class="ui bottom attached segment">
         <table id="applyDataDisplay" width="100%" class="display cell-border" cellspacing="0">
             <thead>
                 <tr class="nowrap">
@@ -37,7 +38,7 @@
                 </tr>
             </thead>
         </table>
-
+    </div>
 </div>
 <#--引入页面底部-->
 <#include "/commons/footer.ftl">
