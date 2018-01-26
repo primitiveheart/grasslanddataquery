@@ -15,6 +15,8 @@ public interface ApplyDataMapper {
 
    List<ApplyData> acquiredPageData(@Param("start") Integer start, @Param("length") Integer length);
 
+   List<ApplyData> acquiredPageDataByUserId(@Param("start") Integer start, @Param("length") Integer length, @Param("userId") Integer userId);
+
    void updateApplyData(ApplyData applyData);
 
    ApplyData acquiredApplyDataById(Integer id);

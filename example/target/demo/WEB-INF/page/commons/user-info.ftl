@@ -6,7 +6,7 @@
         </div>
         <div class="column">
             <a href="" class="admin">用户管理</a>
-            <a href="" class="user">查看结果</a>
+            <a href="lookupResult.html" class="user">查看结果</a>
         </div>
         <div class="column"><a href="" class="admin">数据管理</a></div>
         <div class="column">

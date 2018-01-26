@@ -75,8 +75,7 @@ public class AdminApplyDataDisplayController {
                 applyData.setStatus("审核通过");
                 applyDataMapper.updateApplyData(applyData);
             }
-        }
-        if(applyData.getStatus().equals("审核通过")){
+        }else if(applyData.getStatus().equals("审核通过")){
             //更新数据
             if(applyData != null){
                 applyData.setStatus("审核中");
@@ -86,24 +85,5 @@ public class AdminApplyDataDisplayController {
     }
 
 
-    @RequestMapping("chinese.json")
-    @ResponseBody
-    public void chinese(HttpServletResponse response){
-        JSONObject language = new JSONObject();
 
-        JSONObject paginattion = new JSONObject();
-        paginattion.put("sFirst", "首页");
-        paginattion.put("sPrevious", "前一页");
-        paginattion.put("sNext", "后一页");
-        paginattion.put("sLast", "尾页");
-
-        language.put("sLengthMenu" , "每页显示 _MENU_ 条记录");
-        language.put("sInfo", "从 _START_ 到 _END_ /共 _TOTAL_ 条数据");
-        language.put("sSearch", "搜索");
-        language.put("sZeroRecords", "抱歉! 没有找到");
-        language.put("sInfoEmpty", "没有数据");
-        language.put("oPaginate", paginattion);
-
-        ResponseUtil.renderJson(response, language);
-    }
 }

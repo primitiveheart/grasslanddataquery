@@ -46,6 +46,8 @@
 <script>
     $(document).ready(function(){
        var table =  $("#applyDataDisplay").DataTable({
+//           "sDom": '<"top"fli>rt<"bottom"p><"clear">',
+           "pageLength": 5,
             "serverSide":true,
             "ajax": "acquireApplyData.html",
 //            "ajax":{
@@ -57,7 +59,7 @@
 //                }
 //            },
             "language":{
-                "url":"chinese.json"
+                "url":"../chinese.json"
             },
             "columns":[
                 {"data": "username"},
@@ -87,7 +89,16 @@
                     }
                 },
                 {"data": "coordinate"},
-                {"data": "status"},
+                {
+                    "data": "status",
+                    "render" : function (data, type, row) {
+                        if(data == "审核通过"){
+                            return '<p style="color: #1aa62a">审核通过</p>';
+                        }else if(data == "审核中"){
+                            return '<p style="color: #ef404a">审核中</p>';
+                        }
+                    }
+                },
                 {
                     "data": "createTime",
                     "render":function (data, type, row) {
@@ -101,28 +112,55 @@
                     }
                 },
                 {"data": function(obj){
-                    return '<div><button class="checkPass" data-id="' + obj.id  + '">审核通过</button> <button>查看</button><button class="primary">撤回</button></div>';
+                    return '<div><button class="ui primary button checkPass" data-id="' + obj.id  + '" data-status="'+ obj.status +'">审核通过</button> ' +
+                            '<button class="ui green button">查看</button>' +
+                            '<button class="ui red button withdraw" data-id="' + obj.id  + '" data-status="'+ obj.status +'">撤回</button></div>';
                 }}
             ]
         });
 
-//        $("#applyDataDisplay tbody")
-
-        $(".checkPass").on("click", function(){
-            console.log("enter");
+        //审核通过的按钮
+        $("#applyDataDisplay tbody").on("click", ".checkPass", function(){
             var id = $(this).attr("data-id");
-            var start = table.page.info().start;
-            var length = table.page.info().length;
-            $.ajax({
-                url:"updateApplyData.html",
-                data:{
-                    id:id
-                },
-                type:"post",
-                success: function (result) {
-                    $(location).attr("href", "acquireApplyData.html?start="+ start + "&length=" + length);
-                }
-            })
+            var status = $(this).attr("data-status");
+            if(status == "审核通过"){
+                $(this).attr("disabled",true);
+            }else{
+//                var start = table.page.info().start;
+//                var length = table.page.info().length;
+                $.ajax({
+                    url:"updateApplyData.html",
+                    data:{
+                        id:id
+                    },
+                    type:"post",
+                    success: function (result) {
+                        //刷新本页面
+                       table.draw(false);
+                    }
+                })
+            }
+        })
+
+        //撤回的按钮
+        $("#applyDataDisplay tbody").on("click", ".withdraw", function () {
+            var id = $(this).attr("data-id");
+            var status = $(this).attr("data-status");
+            if(status == "审核中"){
+                $(this).attr("disabled",true);
+            }else{
+                $.ajax({
+                    url:"updateApplyData.html",
+                    data:{
+                        id:id
+                    },
+                    type:"post",
+                    success: function (result) {
+                        //刷新本页面
+                        table.draw(false);
+                    }
+                })
+            }
         })
     })
 

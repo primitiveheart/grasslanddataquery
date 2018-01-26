@@ -4,17 +4,17 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/>
 
-    <link href="../resources/css/plugins/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
-    <link href="../resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
-    <link href="../resources/css/user-info.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/plugins/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
+    <link href="resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/user-info.css" rel="stylesheet" type="text/css"/>
 
-    <script src="../resources/js/jquery-3.2.1.js"></script>
-    <script src="../resources/js/plugins/jquery.dataTables.min.js"></script>
-    <script src="../resources/js/semantic.min.js"></script>
-    <script src="../resources/js/chinese.js"></script>
+    <script src="resources/js/jquery-3.2.1.js"></script>
+    <script src="resources/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="resources/js/semantic.min.js"></script>
+    <script src="resources/js/chinese.js"></script>
 
-    <title>管理员登陆界面</title>
+    <title>用户查看结果界面</title>
 </head>
 <body>
 <#--引入页面头部-->
@@ -26,7 +26,6 @@
         <table id="applyDataDisplay" width="100%" class="display cell-border" cellspacing="0">
             <thead>
                 <tr class="nowrap">
-                    <th>用户名</th>
                     <th>开始的年份</th>
                     <th>结束的年份</th>
                     <th>数据的类型</th>
@@ -59,10 +58,9 @@
 //                }
 //            },
             "language":{
-                "url":"../chinese.json"
+                "url":"chinese.json"
             },
             "columns":[
-                {"data": "username"},
                 {"data": "startYear"},
                 {"data": "endYear"},
                 {
@@ -112,56 +110,12 @@
                     }
                 },
                 {"data": function(obj){
-                    return '<div><button class="ui primary button checkPass" data-id="' + obj.id  + '" data-status="'+ obj.status +'">审核通过</button> ' +
-                            '<button class="ui green button">查看</button>' +
-                            '<button class="ui red button withdraw" data-id="' + obj.id  + '" data-status="'+ obj.status +'">撤回</button></div>';
+                    return '<button class="ui green button">查看</button>';
+
                 }}
             ]
         });
 
-        //审核通过的按钮
-        $("#applyDataDisplay tbody").on("click", ".checkPass", function(){
-            var id = $(this).attr("data-id");
-            var status = $(this).attr("data-status");
-            if(status == "审核通过"){
-                $(this).attr("disabled",true);
-            }else{
-//                var start = table.page.info().start;
-//                var length = table.page.info().length;
-                $.ajax({
-                    url:"updateApplyData.html",
-                    data:{
-                        id:id
-                    },
-                    type:"post",
-                    success: function (result) {
-                        //刷新本页面
-                       table.draw(false);
-                    }
-                })
-            }
-        })
-
-        //撤回的按钮
-        $("#applyDataDisplay tbody").on("click", ".withdraw", function () {
-            var id = $(this).attr("data-id");
-            var status = $(this).attr("data-status");
-            if(status == "审核中"){
-                $(this).attr("disabled",true);
-            }else{
-                $.ajax({
-                    url:"updateApplyData.html",
-                    data:{
-                        id:id
-                    },
-                    type:"post",
-                    success: function (result) {
-                        //刷新本页面
-                        table.draw(false);
-                    }
-                })
-            }
-        })
     })
 
     Date.prototype.Format = function(fmt) {
