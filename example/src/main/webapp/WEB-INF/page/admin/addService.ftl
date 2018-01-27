@@ -26,8 +26,13 @@
         <h4 class="ui top centered attached block header">数据管理</h4>
         <div class="ui bottom attached segment">
             <div class="ui header">大数据类型</div>
+            <label>数据类型(中文)</label>
             <div class="ui input">
                 <input type="text" class="bigData">
+            </div>
+            <label>数据类型(英文)</label>
+            <div class="ui input">
+                <input type="text" class="bigDataEnglish">
             </div>
             <div class="ui primary button addBigData">
                 <i class="plus icon"></i>
@@ -74,7 +79,7 @@
             </table>
         </div>
 
-        <div class="ui tiny modal">
+        <div class="ui tiny  modal">
             <i class="close icon"></i>
             <div class="header">
                 修改
@@ -141,12 +146,14 @@
     $(document).ready(function(){
 
         $(".addBigData").on("click", function () {
-            var temp = $(".bigData").val();
+            var bigData = $(".bigData").val();
+            var bigDataEnglish = $(".bigDataEnglish").val();
             $.ajax({
                 url:"saveBigDataType.html",
                 type:"post",
                 data:{
-                    dataType: temp
+                    dataType: bigData,
+                    dataTypeEnglish: bigDataEnglish
                 },
                 success:function (result) {
                     if(result.msg == "success"){
@@ -260,7 +267,7 @@
             $(".mYear").val(y);
             $(".mLayer").val(l)
 
-            $(".ui.modal").modal({
+            $(".ui.tiny.modal").modal({
                 onDeny: function () {
 
                     return false;
@@ -286,8 +293,7 @@
                                 if(result.msg == "success"){
                                     listTable.ajax.reload();
                                 }else if(result.msg == "failure"){
-                                    $(".ui.failure.modal .header").val("修改数据失败");
-                                    $(".ui.failure.modal").modal("show");
+
                                 }
                             }
                         })

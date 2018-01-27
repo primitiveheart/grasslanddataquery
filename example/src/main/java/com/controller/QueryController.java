@@ -56,33 +56,38 @@ public class QueryController {
         HttpSession session = request.getSession();
         User sessionUser = (User) session.getAttribute("user");
         User user = userMapper.getUserByUsername(sessionUser.getUsername());
+        if(user == null){
+            return "redirect:login";
+        }else {
 
-        JSONObject dataJson = new JSONObject();
-        if(queryData.getWeather() != null && queryData.getWeather().length != 0){
-            dataJson.put("weather", queryData.getWeather());
-        }
-        if(queryData.getTerrain() != null && queryData.getTerrain().length != 0){
-            dataJson.put("terrain", queryData.getTerrain());
-        }
-        if(queryData.getSoil() != null && queryData.getSoil().length() != 0){
-            dataJson.put("soil", queryData.getSoil());
-        }
-        if(queryData.getCarbon() != null && queryData.getCarbon().length != 0){
-            dataJson.put("carbin", queryData.getCarbon());
-        }
-        if(queryData.getVegetation() != null && queryData.getVegetation().length != 0){
-            dataJson.put("vegetation", queryData.getVegetation());
-        }
+            JSONObject dataJson = new JSONObject();
+            if (queryData.getWeather() != null && queryData.getWeather().length != 0) {
+                dataJson.put("weather", queryData.getWeather());
+            }
+            if (queryData.getTerrain() != null && queryData.getTerrain().length != 0) {
+                dataJson.put("terrain", queryData.getTerrain());
+            }
+            if (queryData.getSoil() != null && queryData.getSoil().length() != 0) {
+                dataJson.put("soil", queryData.getSoil());
+            }
+            if (queryData.getCarbon() != null && queryData.getCarbon().length != 0) {
+                dataJson.put("carbin", queryData.getCarbon());
+            }
+            if (queryData.getVegetation() != null && queryData.getVegetation().length != 0) {
+                dataJson.put("vegetation", queryData.getVegetation());
+            }
 
-        ApplyData applyData = new ApplyData();
-        applyData.setCoordinate(queryData.getLatitude() + ";" + queryData.getLongitude());
-        applyData.setStartTime(queryData.getStartYear());
-        applyData.setEndTime(queryData.getEndYear());;
-        applyData.setStatus("审核中");
-        applyData.setDataType(dataJson.toJSONString());
-        applyData.setUserId(user.getId());
+            ApplyData applyData = new ApplyData();
+            applyData.setCoordinate(queryData.getLatitude() + ";" + queryData.getLongitude());
+            applyData.setStartTime(queryData.getStartYear());
+            applyData.setEndTime(queryData.getEndYear());
+            ;
+            applyData.setStatus("审核中");
+            applyData.setDataType(dataJson.toJSONString());
+            applyData.setUserId(user.getId());
 
-        applyDataMapper.addApplyData(applyData);
+            applyDataMapper.addApplyData(applyData);
+        }
 
         return "create-order-success";
     }
@@ -438,54 +443,55 @@ public class QueryController {
        String url = "http://localhost:8080/geoserver/wms";
        String param = "bbox="+ bbox +"&info_format=text/plain&request=GetFeatureInfo&" +
                "layers=" + layers + "&query_layers=" + query_layers + "&width=" + width + "&height=" + height + "&x=" + x + "&y=" + y;
-       String temp = sendGet(url, param);
-       return temp;
+//       String temp = sendGet(url, param);
+//       return temp;
+        return "";
     }
 
-    /**
-     * 向geoserver的项目发送get方式
-     * @param url
-     * @param param
-     * @return
-     */
-    @ModelAttribute
-    public String sendGet(String url, String param){
-        String result = "";
-        BufferedReader br = null;
-        try{
-            String urlNameString = url + "?" + param;
-            //String urlNameString = "http://localhost:8080/geoserver/wms?bbox=73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392&styles=&format=text%2Fhtml%3B+subtype%3Dopenlayers&info_format=text/plain&request=GetFeatureInfo&layers=cite:geotools_coverage_3&query_layers=cite:geotools_coverage_3&width=768&height=444&x=170&y=160";
-            URL realUrl = new URL(urlNameString);
-            //打开和URL之间的连接
-            URLConnection connection = realUrl.openConnection();
-//            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
-            //设置通用的请求属性
-//            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            //建立实际的连接
-            connection.connect();
-//            //获取所有的响应字段
-//            Map<String, List<String>> map = connection.getHeaderFields();
-//            //遍历所有的响应字段
-//            for(String key : map.keySet()){
-//
+//    /**
+//     * 向geoserver的项目发送get方式
+//     * @param url
+//     * @param param
+//     * @return
+//     */
+//    @ModelAttribute
+//    public String sendGet(String url, String param){
+//        String result = "";
+//        BufferedReader br = null;
+//        try{
+//            String urlNameString = url + "?" + param;
+//            //String urlNameString = "http://localhost:8080/geoserver/wms?bbox=73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392&styles=&format=text%2Fhtml%3B+subtype%3Dopenlayers&info_format=text/plain&request=GetFeatureInfo&layers=cite:geotools_coverage_3&query_layers=cite:geotools_coverage_3&width=768&height=444&x=170&y=160";
+//            URL realUrl = new URL(urlNameString);
+//            //打开和URL之间的连接
+//            URLConnection connection = realUrl.openConnection();
+////            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+//            //设置通用的请求属性
+////            connection.setRequestProperty("accept", "*/*");
+//            connection.setRequestProperty("connection", "Keep-Alive");
+//            //建立实际的连接
+//            connection.connect();
+////            //获取所有的响应字段
+////            Map<String, List<String>> map = connection.getHeaderFields();
+////            //遍历所有的响应字段
+////            for(String key : map.keySet()){
+////
+////            }
+//            //定义BufferedReader输入流来读取URL的响应
+//            br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//            String line;
+//            while((line = br.readLine()) != null){
+//                result += line + ",";
 //            }
-            //定义BufferedReader输入流来读取URL的响应
-            br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String line;
-            while((line = br.readLine()) != null){
-                result += line + ",";
-            }
-        }catch (Exception e){
-            try{
-                if(br != null){
-                    br.close();
-                }
-            }catch (Exception e2){
-                throw new RuntimeException(e2);
-            }
-        }
-        return result;
-    }
+//        }catch (Exception e){
+//            try{
+//                if(br != null){
+//                    br.close();
+//                }
+//            }catch (Exception e2){
+//                throw new RuntimeException(e2);
+//            }
+//        }
+//        return result;
+//    }
 
 }

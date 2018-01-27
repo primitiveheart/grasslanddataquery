@@ -118,12 +118,18 @@
                 },
                 {"data": function(obj){
                     return '<div><button class="ui primary button checkPass" data-id="' + obj.id  + '" data-status="'+ obj.status +'">审核通过</button> ' +
-                            '<button class="ui green button">查看</button>' +
+                            '<button class="ui green button lookup" data-id="' + obj.id+'">查看</button>' +
                             '<button class="ui red button withdraw" data-id="' + obj.id  + '" data-status="'+ obj.status +'">撤回</button></div>';
                 }}
             ]
         });
 
+        //查看按钮
+        $("#applyDataDisplay tbody").on("click", ".lookup", function () {
+            var id = $(this).attr("data-id");
+            $(location).attr("href","lookup.html?id=" + id);
+        })
+        
         //审核通过的按钮
         $("#applyDataDisplay tbody").on("click", ".checkPass", function(){
             var id = $(this).attr("data-id");

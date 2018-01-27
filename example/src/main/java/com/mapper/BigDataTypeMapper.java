@@ -12,5 +12,5 @@ public interface BigDataTypeMapper {
 
     List<BigDataType> acquiredAllBigDataType();
 
-    void saveBigDataType(String dataType);
+    void saveBigDataType(BigDataType bigDataType);
 }

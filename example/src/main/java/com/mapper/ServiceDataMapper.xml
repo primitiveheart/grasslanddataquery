@@ -29,6 +29,10 @@
         SELECT <include refid="base_column_list"/> FROM services ORDER BY create_time DESC limit #{start}, #{length}
     </select>
 
+    <select id="queryServiceDataByBigAndSmallDataTypeBetweenYear" resultMap="result">
+        SELECT <include refid="base_column_list"/> FROM services WHERE year_ BETWEEN #{startYear} AND #{endYear} AND big_data_type = #{bigDataType} and small_data_type = #{smallDataType}
+    </select>
+
     <delete id="deleteServiceData" parameterType="Integer">
         DELETE FROM services WHERE id = #{id};
     </delete>

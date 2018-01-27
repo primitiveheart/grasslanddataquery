@@ -6,6 +6,7 @@ package com.entity;
 public class BigDataType {
     private Integer id;
     private String dataType;
+    private String dataTypeEnglish;
 
     public Integer getId() {
         return id;
@@ -21,5 +22,13 @@ public class BigDataType {
 
     public void setDataType(String dataType) {
         this.dataType = dataType;
+    }
+
+    public String getDataTypeEnglish() {
+        return dataTypeEnglish;
+    }
+
+    public void setDataTypeEnglish(String dataTypeEnglish) {
+        this.dataTypeEnglish = dataTypeEnglish;
     }
 }

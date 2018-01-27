@@ -19,5 +19,8 @@ public interface ServiceDataMapper {
 
     void updateServiceData(ServiceData serviceData);
 
+    List<ServiceData> queryServiceDataByBigAndSmallDataTypeBetweenYear(@Param("bigDataType") String bigDataType, @Param("smallDataType") String smallDataType,
+                                                            @Param("startYear")Integer startYear, @Param("endYear")Integer endYear);
+
     List<ServiceData> acquiredServiceDataPageData(@Param("start") Integer start, @Param("length") Integer length);
 }

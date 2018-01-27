@@ -19,5 +19,7 @@ public interface ApplyDataMapper {
 
    void updateApplyData(ApplyData applyData);
 
+   ApplyData queryApplyDataById(Integer id);
+
    ApplyData acquiredApplyDataById(Integer id);
 }

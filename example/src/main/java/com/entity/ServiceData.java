@@ -10,7 +10,7 @@ public class ServiceData {
     private Integer id;
     private String bigDataType;
     private String smallDataType;
-    private String year;
+    private Integer year;
     private String layer;
     private Timestamp createTime;
     private Timestamp updateTime;
@@ -39,11 +39,11 @@ public class ServiceData {
         this.smallDataType = smallDataType;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

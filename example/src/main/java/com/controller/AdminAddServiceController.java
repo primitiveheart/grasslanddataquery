@@ -41,11 +41,11 @@ public class AdminAddServiceController {
 
     @RequestMapping(value = "saveBigDataType.html", method = RequestMethod.POST)
     @ResponseBody
-    public void saveBigDataType(HttpServletResponse response, String dataType){
+    public void saveBigDataType(HttpServletResponse response, BigDataType bigDataType){
         JSONObject result = new JSONObject();
 
         try {
-            bigDataTypeMapper.saveBigDataType(dataType);
+            bigDataTypeMapper.saveBigDataType(bigDataType);
             result.put("msg", "success");
         }catch (Exception e){
             result.put("msg", "failure");

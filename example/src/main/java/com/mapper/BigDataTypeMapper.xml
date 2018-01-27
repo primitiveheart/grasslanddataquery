@@ -5,18 +5,19 @@
     <resultMap id="result" type="bigDataType">
         <result property="id" column="id"/>
         <result property="dataType" column="data_type"/>
+        <result property="dataTypeEnglish" column="data_type_english"/>
     </resultMap>
 
     <sql id="base_column_list">
-        id, data_type
+        id, data_type, data_type_english
     </sql>
 
     <select id="acquiredAllBigDataType" resultMap="result">
         SELECT <include refid="base_column_list"/> FROM bigdatatypes;
     </select>
 
-    <insert id="saveBigDataType" parameterType="String">
-        INSERT INTO bigdatatypes(data_type) VALUES(#{dataType})
+    <insert id="saveBigDataType" parameterType="bigDataType">
+        INSERT INTO bigdatatypes(data_type, data_type_english) VALUES(#{dataType}, #{dataTypeEnglish})
     </insert>
 
 </mapper>

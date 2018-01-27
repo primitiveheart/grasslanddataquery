@@ -1,7 +1,7 @@
 <div class="ui grid userInfo">
     <div class="ui five column row">
         <div class="column">
-            <a href="home.hml" class="admin">主页</a>
+            <a href="home.html" class="admin">主页</a>
             <a href="query.html" class="user">主页</a>
         </div>
         <div class="column">
