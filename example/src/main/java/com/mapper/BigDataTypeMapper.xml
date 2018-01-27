@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BigDataTypeMapper">
+    <resultMap id="result" type="bigDataType">
+        <result property="id" column="id"/>
+        <result property="dataType" column="data_type"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id, data_type
+    </sql>
+
+    <select id="acquiredAllBigDataType" resultMap="result">
+        SELECT <include refid="base_column_list"/> FROM bigdatatypes;
+    </select>
+
+    <insert id="saveBigDataType" parameterType="String">
+        INSERT INTO bigdatatypes(data_type) VALUES(#{dataType})
+    </insert>
+
+</mapper>

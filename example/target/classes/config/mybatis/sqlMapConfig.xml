@@ -6,5 +6,7 @@
     <typeAliases>
         <typeAlias type="com.entity.User" alias="user"/>
         <typeAlias type="com.entity.ApplyData" alias="applyData"/>
+        <typeAlias type="com.entity.BigDataType" alias="bigDataType"/>
+        <typeAlias type="com.entity.ServiceData" alias="serviceData"/>
     </typeAliases>
 </configuration>

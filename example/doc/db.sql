@@ -19,3 +19,18 @@ CREATE TABLE IF NOT EXISTS applydatas(
   userId int(11),
   FOREIGN KEY(userId) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS services(
+  id int(11) PRIMARY KEY auto_increment,
+  big_data_type VARCHAR(50) NOT  NULL,
+  small_data_type VARCHAR(50) NOT NULL,
+  year_ VARCHAR(10) NOT NULL ,
+  layer VARCHAR(40) NOT NULL ,
+  create_time TIMESTAMP ,
+  update_time TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS bigdatatypes(
+  id int(11) PRIMARY KEY auto_increment,
+  data_type VARCHAR(50)
+);
