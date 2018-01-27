@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <div class="ui failure model">
+        <div class="ui failure modal">
             <div class="header"></div>
             <div class="actions">
                 <div class="ui positive button">确定</div>
