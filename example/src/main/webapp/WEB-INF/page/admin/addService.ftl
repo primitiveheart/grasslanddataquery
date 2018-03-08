@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/>
@@ -18,8 +17,8 @@
 </head>
 <body>
 <#--引入页面头部-->
-<#include "/commons/header.ftl">
-<#include "/commons/user-info.ftl">
+<#include "/common/header.ftl">
+<#include "/common/user-info.ftl">
 <#--页面内容-->
 <div class="content_">
 
@@ -39,26 +38,86 @@
                 <label>添加</label>
             </div>
 
+            <div class="ui header">小数据类型</div>
+            <label>大数据类型</label>
+            <div class="ui selection dropdown bigDataType">
+                <input type="hidden" name="bigDataType">
+                <i class="dropdown icon"></i>
+                <div class="default text">----请选择----</div>
+                <div class="menu">
+                    <#if bigDataTypes?? && bigDataTypes?size gt 0>
+                        <#list bigDataTypes as bdt>
+                            <div class="item" data-value="${bdt.dataTypeEnglish}">${bdt.dataType}</div>
+                        </#list>
+                    </#if>
+                </div>
+            </div>
+            <label>数据类型(中文)</label>
+            <div class="ui input">
+                <input type="text" class="smallData">
+            </div>
+            <label>数据类型(英文)</label>
+            <div class="ui input">
+                <input type="text" class="smallDataEnglish">
+            </div>
+            <div class="ui primary button addSmallData">
+                <i class="plus icon"></i>
+                <label>添加</label>
+            </div>
+
             <div class="ui divider"></div>
             <div class="ui header">添加服务</div>
-            <div class="ui green button addRow">
-                <i class="plus icon"></i>
-                <label>添加服务</label>
-            </div>
             <div class="ui divider"></div>
-            <table id="addService" width="100%" class="display cell-border" cellspacing="0">
-                <thead>
-                <tr class="nowrap">
-                    <th>大数据类型</th>
-                    <th>小数据类</th>
-                    <th>年份</th>
-                    <th>图层</th>
-                    <th>创建的时间</th>
-                    <th>更新的时间</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-            </table>
+
+            <div class="ui form">
+                <div class="fields">
+                    <div class="field inline">
+                        <label>大数据类型</label>
+                        <div class="ui addServiceBigDataType selection dropdown">
+                            <input type="hidden" name="bigDataType">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">大数据类型</div>
+                            <div class="menu">
+                                <#if bigDataTypes?? && bigDataTypes?size gt 0>
+                                    <#list bigDataTypes as bdt>
+                                        <div class="item" data-value="${bdt.dataType}">${bdt.dataType}</div>
+                                    </#list>
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field inline">
+                        <label>小数据类型</label>
+                        <div class="ui addServiceSmallDataType selection dropdown">
+                            <input type="hidden" name="smallDataType">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">小数据类型</div>
+                            <div class="menu"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fields">
+                    <div class="field inline">
+                        <label>年份</label>
+                        <input type="text" name="year" class="year">
+                    </div>
+
+                    <div class="field inline">
+                        <label>图层</label>
+                        <input type="text" name="layer" class="layer">
+                    </div>
+                </div>
+
+
+                <div class="ui green submit button addService">
+                    <i class="plus icon"></i>
+                    <label>添加服务</label>
+                </div>
+
+            </div>
+
 
             <div class="ui divider"></div>
 
@@ -86,28 +145,38 @@
             </div>
             <div class="content">
                 <p>
-                    <div class="ui input">
-                        <h4><label>大数据类型:</label></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" name="mBigDataType" class="mBigDataType">
+                    <div class="inline">
+                        <label>大数据类型:</label>
+                        <#--<input type="text" name="mBigDataType" class="mBigDataType">-->
+                        <div class="ui mBigDataType selection dropdown">
+                            <input type="hidden" name="mBigDataType">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">大数据类型</div>
+                            <div class="menu"></div>
+                        </div>
                     </div>
                 </p>
                <p>
-                   <div class="ui input">
-                       <h4><label>小数据类型:</label></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                       <input type="text" name="mSmallDataType" class="mSmallDataType">
+                   <div class="inline">
+                       <label>小数据类型:</label>
+                       <#--<input type="text" name="mSmallDataType" class="mSmallDataType">-->
+                        <div class="ui mSmallDataType selection dropdown">
+                            <input type="hidden" name="mSmallDataType">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">小数据类型</div>
+                            <div class="menu"></div>
+                        </div>
                    </div>
                </p>
                <p>
-                   <div class="ui input">
-                       <h4><label>年份:</label></h4>
-                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <div class="ui input inline">
+                       <label>年份:</label>
                        <input type="text" name="mYear" class="mYear">
                    </div>
                </p>
                 <p>
-                    <div class="ui input">
-                        <h4><label>图层:</label></h4>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="ui input inline">
+                        <label>图层:</label>
                         <input type="text" name="mLayer" class="mLayer">
                     </div>
                 </p>
@@ -139,12 +208,13 @@
 
 </div>
 <#--引入页面底部-->
-<#include "/commons/footer.ftl">
+<#include "/common/footer.ftl">
 </body>
 <script src="../resources/js/date.js"></script>
 <script>
     $(document).ready(function(){
 
+        //大数据类型添加到数据库中
         $(".addBigData").on("click", function () {
             var bigData = $(".bigData").val();
             var bigDataEnglish = $(".bigDataEnglish").val();
@@ -166,58 +236,76 @@
             })
         })
 
-        var table =  $("#addService").DataTable({
-            "searching": false,
-            "bInfo": false,
-            "lengthChange":false,
-            "paging": false,
-            "pageLength": 5,
-            "language": {
-                "url": "../chinese.json"
-            }
-        });
-
-        $(".addRow").on("click" , function () {
-            var today = new Date().Format("yyyy-MM-dd hh:mm:ss");
-            var select = "";
-            $.ajax({
-                url:"acquiredAllBigDataType.html",
-                async:false,
-                success: function (result) {
-                    var len = result.types.length;
-                    select = '<select class="ui bigDataType selection dropdown" name="bigDataType" style="width: 100px;">';
-                    for(var i = 0; i < len; i++){
-                        select += '<option value="' + result.types[i] +'"> '+ result.types[i] + '</option>';
-                    }
-                    select += '</select>';
-                }
-            })
-            var smallDataType = '<div class="ui input"><input type="text" class="smallDataType" name="smallDataType" value=""/></div>';
-            var year = '<div class="ui input"><input type="text" class="year" name="year" value=""/></div>';
-            var layer = '<div class="ui input"><input type="text" class="layer" name="layer" value=""/></div>';
-            var createTime = '<div class="ui input"><input type="text" class="createTime" name="createTime" value="'+ today.toString() +'" readonly="readonly"/></div>';
-            var updateTime = '<div class="ui input"><input type="text" class="updateTime" name="updateTime" value="'+ today.toString() +'" readonly="readonly"/></div>';
-            var op = '<div class="ui blue button addData">添加</div>';
-            table.row.add([select, smallDataType, year, layer, createTime, updateTime, op]).draw();
-        })
+        //小数据类型中大数据类型的下拉框数据
+        $(".ui.selection.dropdown.bigDataType").dropdown()
         
-        $("#addService tbody").on("click", ".addData", function () {
-            var data = table.row($(this).parents("tr")).$('input, label, select').serialize();
+        //小数据类型添加到数据库中
+        $(".addSmallData").on("click", function () {
+            var smallData = $(".smallData").val();
+            var smallDataEnglish = $(".smallDataEnglish").val();
+            var bigDataTypeEnglish = $(".ui.selection.dropdown.bigDataType").dropdown('get value');
+            $.ajax({
+                url:"saveSmallDataType.html",
+                type:"POST",
+                data:{
+                    dataType:smallData,
+                    dataTypeEnglish:smallDataEnglish,
+                    bigDataTypeEnglish:bigDataTypeEnglish
+                },
+                success: function(){
+                    //TODO
+                    //数据添加完之后刷新一下
+                    $(location).attr("href","addService.html");
+                }
+
+            })
+        })
+
+        //添加服务中的大数据类型
+        $(".ui.addServiceBigDataType.dropdown").dropdown({
+                onChange: function(value, text, $selectedItem){
+                    // 先清除
+                    $(".ui.addServiceSmallDataType.dropdown").dropdown('clear');
+                    //小数据类型
+                    $.ajax({
+                        url:"acquireAllSmallDataType.html",
+                        data:{
+                            name:value
+                        },
+                        success: function (result) {
+                            //清除元素
+                            $(".ui.addServiceSmallDataType .menu").children().remove().end();
+                            //遍历从后台返回的列表
+                            $.each(result.smallDataTypes, function (index, value) {
+                                var $div = $("<div class='item' data-value='"+value.dataType + "'>"+value.dataType+"</div>")
+                                $div.appendTo($(".ui.addServiceSmallDataType .menu"));
+                            })
+                        }
+                    })
+                }
+        })
+
+        //提交服务数据
+        $(".addService").on("click", function () {
+            var data = $(".ui.form input").serialize();
+            var today = new Date().Format("yyyy-MM-dd hh:mm:ss");
+            var createTime = today.toString();
+            var updateTime = today.toString();
+            data += "&createTime=" + createTime + "&updateTime=" + updateTime;
             $.ajax({
                 url:"saveServiceData.html",
                 type:"post",
+                dataType:"json",
                 data:data,
                 success: function (result) {
-                    if(result.msg == "success"){
-                        $(location).attr("href","addService.html");
-                    }else if(result.msg == "failure"){
-                        $(".ui.failure.modal .header").val("添加服务失败");
-                        $(".ui.failure.modal").modal("show");
-                    }
+                    //TODO
+                    //数据添加完之后刷新一下
+                    $(location).attr("href","addService.html");
                 }
             })
         })
-        
+
+        //服务列表的显示
         var listTable = $("#listService").DataTable({
             "serverSide":true,
             "pageLength":5,
@@ -262,6 +350,57 @@
             var sdt = data.smallDataType;
             var y = data.year;
             var l = data.layer;
+
+            //大数据类型
+            $.ajax({
+                url:"acquiredAllBigDataType.html",
+                success: function (result) {
+                    $.each(result.bigDataTypes, function (index, value) {
+                        var $div = $("<div class='item' data-value='"+value.dataType+"'>"+value.dataType+"</div>");
+                        $div.appendTo($(".ui.mBigDataType.dropdown .menu"));
+                    })
+                }
+            })
+
+            //小数据类型
+            $.ajax({
+                url:"acquireAllSmallDataType.html",
+                data:{
+                    name:bdt
+                },
+                success: function (result) {
+                    //设置大数据类型的选中值
+                    $(".ui.mBigDataType.dropdown").dropdown('set selected',bdt);
+                    $.each(result.smallDataTypes, function (index, value) {
+                        var $div = $("<div class='item' data-value='"+value.dataType+"'>"+value.dataType+"</div>");
+                        $div.appendTo($(".ui.mSmallDataType.dropdown .menu"));
+                    })
+                    $(".ui.mSmallDataType.dropdown").dropdown('set selected',sdt);
+                }
+            })
+
+            //大数据类型与小数据类型联动
+            $(".ui.mBigDataType.dropdown").dropdown({
+                onChange: function (value, text, $selectedItem) {
+                    //清除元素内容
+                    $(".ui.mSmallDataType.dropdown .menu").dropdown('clear');
+                    $(".ui.mSmallDataType.dropdown .menu").children().remove().end();
+                    //小数据类型随着变化
+                    $.ajax({
+                        url:"acquireAllSmallDataType.html",
+                        data:{
+                            name:value
+                        },
+                        success: function (result) {
+                            $.each(result.smallDataTypes, function (index, value) {
+                                var $div = $("<div class='item' data-value='"+value.dataType+"'>"+value.dataType+"</div>");
+                                $div.appendTo($(".ui.mSmallDataType.dropdown .menu"));
+                            })
+                        }
+                    })
+                }
+            })
+
             $(".mBigDataType").val(bdt);
             $(".mSmallDataType").val(sdt);
             $(".mYear").val(y);
@@ -269,7 +408,8 @@
 
             $(".ui.tiny.modal").modal({
                 onDeny: function () {
-
+                    //刷新一下
+                    $(location).attr("href","addService.html");
                     return false;
                 },
                 onApprove : function () {

@@ -35,3 +35,11 @@ CREATE TABLE IF NOT EXISTS bigdatatypes(
   data_type VARCHAR(50),
   data_type_english VARCHAR(50)
 );
+
+CREATE TABLE IF NOT EXISTS smalldatatypes(
+  id int(11) PRIMARY KEY auto_increment,
+  data_type VARCHAR(50),
+  data_type_english VARCHAR(50),
+  big_data_type_id int(11),
+  FOREIGN KEY (big_data_type_id) REFERENCES bigdatatypes(id)
+);

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.SmallDataTypeMapper">
+
+    <resultMap id="result" type="smallDataType">
+        <result property="id" column="id"/>
+        <result property="dataType" column="data_type"/>
+        <result property="dataTypeEnglish" column="data_type_english"/>
+        <result property="bigDataTypeId" column="big_data_type_id"/>
+    </resultMap>
+    
+    <resultMap id="bSDataType" type="bigSmallDataTypeVo">
+        <result property="bDataType" column="bDataType"/>
+        <result property="bDataTypeEnglish" column="bDataTypeEnglish"/>
+        <result property="sDataType" column="sDataType"/>
+        <result property="sDataTypeEnglish" column="sDataTypeEnglish"/>
+    </resultMap>
+
+    <insert id="saveSmallDataType" parameterType="smallDataType" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO smalldatatypes (data_type, data_type_english, big_data_type_id) VALUES (#{dataType}, #{dataTypeEnglish}, #{bigDataTypeId})
+    </insert>
+
+    <select id="listAllSmallDataType" parameterType="Integer" resultMap="result">
+        SELECT smalldatatypes.id as id, smalldatatypes.data_type as data_type,
+         smalldatatypes.data_type_english as data_type_english, bigdatatypes.id as big_data_type_id FROM smalldatatypes, bigdatatypes WHERE smalldatatypes.big_data_type_id = bigdatatypes.id AND bigdatatypes.id = #{bigDataTypeId}
+    </select>
+
+    <select id="getBigSmallDataType" parameterType="String" resultMap="bSDataType">
+        SELECT smalldatatypes.data_type as sDataType, smalldatatypes.data_type_english as sDataTypeEnglish,
+        bigdatatypes.data_type as bDataType,bigdatatypes.data_type_english as bDataTypeEnglish FROM smalldatatypes, bigdatatypes
+        WHERE smalldatatypes.big_data_type_id = bigdatatypes.id AND bigdatatypes.data_type_english = #{bigDataTypeEnglish}
+         AND smalldatatypes.data_type_english = #{smallDataTypeEnglish}
+    </select>
+
+    <select id="getAllBigSmallDataType" resultMap="bSDataType">
+        SELECT smalldatatypes.data_type as sDataType, smalldatatypes.data_type_english as sDataTypeEnglish,
+        bigdatatypes.data_type as bDataType,bigdatatypes.data_type_english as bDataTypeEnglish FROM smalldatatypes, bigdatatypes
+        WHERE smalldatatypes.big_data_type_id = bigdatatypes.id
+    </select>
+
+</mapper>

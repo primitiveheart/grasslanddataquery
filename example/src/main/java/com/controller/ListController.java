@@ -4,10 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.entity.ApplyData;
 import com.entity.User;
 import com.mapper.ApplyDataMapper;
+import com.mapper.ServiceDataMapper;
+import com.mapper.SmallDataTypeMapper;
 import com.mapper.UserMapper;
 import com.util.ResponseUtil;
 import com.util.ToolUtils;
 import com.vo.ApplyDataVO;
+import com.vo.BigSmallDataTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,12 @@ public class ListController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ServiceDataMapper serviceDataMapper;
+
+    @Autowired
+    private SmallDataTypeMapper smallDataTypeMapper;
+
     @RequestMapping(value = "acquireApplyData.html")
     @ResponseBody
     public void acquireApplyData(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) Integer draw,
@@ -40,14 +49,20 @@ public class ListController {
         User existUser = (User) request.getSession().getAttribute("user");
         JSONObject result = new JSONObject();
 
-        Integer recordsTotal = applyDataMapper.applyDataTotal();
-        Integer recordsFiltered = applyDataMapper.applyDataTotal();
+        Integer recordsTotal = applyDataMapper.applyDataTotalByUserId(existUser.getId());
+        Integer recordsFiltered = applyDataMapper.applyDataTotalByUserId(existUser.getId());
         List<ApplyData> page = applyDataMapper.acquiredPageDataByUserId(start, length, existUser.getId());
+
+        //获取所有的小的数据类型
+        List<BigSmallDataTypeVo> bigSmallDataTypeVos = smallDataTypeMapper.getAllBigSmallDataType();
 
         List<ApplyDataVO> data = new ArrayList<ApplyDataVO>();
         for(int i=0; i<page.size(); i++){
             ApplyData applyData = page.get(i);
             ApplyDataVO applyDataVO = new ApplyDataVO(applyData);
+
+            ToolUtils.transferEnglishToChinese(bigSmallDataTypeVos, applyDataVO);
+
             String coordinate = applyData.getCoordinate();
             applyDataVO.setCoordinate("纬度: " + coordinate.split(";")[0] + " 经度: " + coordinate.split(";")[1]);
             data.add(applyDataVO);
@@ -60,22 +75,21 @@ public class ListController {
         ResponseUtil.renderJson(response, result);
     }
 
+
     /**
+     *  地图方式的获取的数据
      * @param request
+     * @param type 小的数据类型
      * @return
      */
-    @RequestMapping("dataYear.html")
-    public String getDataYear(HttpServletRequest request, String type){
-        List<String> allYear = new ArrayList<String>();
-        for(int i = 1981; i <= 2013 ;i++){
-            allYear.add(i + "");
-        }
-        Map<String, String> map = ToolUtils.getDataType();
+    @RequestMapping("mapMethod.html")
+    public String mapMethod(HttpServletRequest request, String type){
 
+        List<String> allYear = serviceDataMapper.listYearBySmallDataTypeEnglish(type);
         request.setAttribute("allYear", allYear);
-        request.setAttribute(type, type);
-        request.setAttribute("name", map.get(type));
-        return "data-year-list";
+        request.setAttribute("type", type);
+
+        return "map-method";
     }
 
     @RequestMapping("lookupResult.html")
@@ -89,4 +103,5 @@ public class ListController {
             return "lookup-result";
         }
     }
+
 }

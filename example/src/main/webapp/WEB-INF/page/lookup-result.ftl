@@ -18,8 +18,8 @@
 </head>
 <body>
 <#--引入页面头部-->
-<#include "/commons/header.ftl">
-<#include "/commons/user-info.ftl">
+<#include "/common/header.ftl">
+<#include "/common/user-info.ftl">
 <#--页面内容-->
 <div class="content_">
     <h4 class="ui top centered attached block header">查看申请的结果</h4>
@@ -31,9 +31,9 @@
                     <th>结束的年份</th>
                     <th>数据的类型</th>
                     <th>坐标</th>
-                    <th>状态</th>
                     <th>创建的时间</th>
                     <th>更新的时间</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -41,7 +41,7 @@
     </div>
 </div>
 <#--引入页面底部-->
-<#include "/commons/footer.ftl">
+<#include "/common/footer.ftl">
 </body>
 <script src="resources/js/date.js"></script>
 <script>
@@ -60,45 +60,13 @@
 //                }
 //            },
             "language":{
-                "url":"chinese.json"
+                "url":"common/chinese.json"
             },
             "columns":[
                 {"data": "startYear"},
                 {"data": "endYear"},
-                {
-                    "data": "dataType",
-                    "render": function(data, type, row){
-                        var json = eval('(' + data + ')');
-                        var result;
-                        if(json.hasOwnProperty("weather")){
-                            result = "气象数据: " + weather(json.weather.join(" ")) + "<br>";
-                        }
-                        if(json.hasOwnProperty("vegetation")){
-                            result += "植被数据: " + vegetation(json.vegetation.join(" "))+ "<br>";
-                        }
-                        if(json.hasOwnProperty("terrain")){
-                            result += "地形数据: " + terrain(json.terrain.join(" ")) + "<br>";
-                        }
-                        if(json.hasOwnProperty("soil")){
-                            result += "土壤数据: " +" \*土壤类型（亚类）" + "<br>";
-                        }
-                        if(json.hasOwnProperty("carbin")){
-                            result += "固碳现状: " + carbin(json.carbin.join(" "))+ "<br>";
-                        }
-                        return result;
-                    }
-                },
+                {"data": "dataType"},
                 {"data": "coordinate"},
-                {
-                    "data": "status",
-                    "render" : function (data, type, row) {
-                        if(data == "审核通过"){
-                            return '<p style="color: #1aa62a">审核通过</p>';
-                        }else if(data == "审核中"){
-                            return '<p style="color: #ef404a">审核中</p>';
-                        }
-                    }
-                },
                 {
                     "data": "createTime",
                     "render":function (data, type, row) {
@@ -111,13 +79,27 @@
                         return new Date(data).Format("yyyy-MM-dd hh:mm:ss");
                     }
                 },
+                {
+                    "data": "status",
+                    "render" : function (data, type, row) {
+                        if(data == "审核通过"){
+                            return '<p style="color: #1aa62a">审核通过</p><a class="ui blue" href="common/lookup.html?id='+row.id+'">查看</>';
+                        }else if(data == "审核中"){
+                            return '<p style="color: #ef404a">审核中</p>';
+                        }
+                    }
+                },
                 {"data": function(obj){
-                    return '<button class="ui green button">查看</button>';
-
+                    return '<button class="ui green button" data-id="' + obj.id + '">删除</button>';
                 }}
             ]
         });
 
+        //删除
+        $(".ui.button").on("click", function(){
+            var id = $(this).attr("data-id");
+//            $(location).attr("href", "lookup.html?id=" + id);
+        })
     })
 
 

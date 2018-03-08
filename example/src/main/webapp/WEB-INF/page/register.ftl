@@ -11,7 +11,7 @@
     </head>
     <body>
     <#--引入页面头部-->
-    <#include "/commons/header.ftl">
+    <#include "/common/header.ftl">
     <#--页面内容-->
     <div class="content_">
         <div class="login">
@@ -45,6 +45,6 @@
         </div>
     </div>
     <#--引入页面底部-->
-    <#include "/commons/footer.ftl"/>
+    <#include "/common/footer.ftl"/>
     </body>
 </html>

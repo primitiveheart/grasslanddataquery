@@ -26,6 +26,10 @@
         SELECT COUNT(*) FROM applydatas
     </select>
 
+    <select id="applyDataTotalByUserId" parameterType="Integer" resultType="Integer">
+        SELECT COUNT(*) FROM applydatas WHERE userId = #{id}
+    </select>
+
     <select id="acquiredPageData" parameterType="Integer" resultMap="result">
         SELECT <include refid="base_column_list"/> FROM applydatas ORDER BY create_time desc limit #{start}, #{length}
     </select>

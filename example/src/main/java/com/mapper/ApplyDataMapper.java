@@ -13,6 +13,8 @@ public interface ApplyDataMapper {
 
    Integer applyDataTotal();
 
+   Integer applyDataTotalByUserId(Integer integer);
+
    List<ApplyData> acquiredPageData(@Param("start") Integer start, @Param("length") Integer length);
 
    List<ApplyData> acquiredPageDataByUserId(@Param("start") Integer start, @Param("length") Integer length, @Param("userId") Integer userId);

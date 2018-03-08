@@ -1,11 +1,14 @@
 package com.util;
 
 import com.constant.TypeConstant;
+import com.vo.ApplyDataVO;
+import com.vo.BigSmallDataTypeVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.SystemUtils;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,14 +36,23 @@ public class ToolUtils {
         return sb.toString();
     }
 
-    public static Map<String, String> getDataType(){
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("tempature_min", TypeConstant.TEMPATURE_MIN);
-        map.put("tempature_max", TypeConstant.TEMPATURE_MAX);
-        map.put("tempature_average", TypeConstant.TEMPATURE_AVERAGE);
-        map.put("sumRainfall", TypeConstant.SUMRAINFALL);
-        map.put("solarRadition", TypeConstant.SOLARRADITION);
-        return map;
+    public static void transferEnglishToChinese(List<BigSmallDataTypeVo> bigSmallDataTypeVos, ApplyDataVO applyDataVO) {
+        for(BigSmallDataTypeVo bigSmallDataTypeVo : bigSmallDataTypeVos){
+            //把大数据类型的英文替换成大数据类型的中文
+            if(applyDataVO.getDataType().contains(bigSmallDataTypeVo.getbDataTypeEnglish())){
+                applyDataVO.setDataType(applyDataVO.getDataType()
+                        .replace(bigSmallDataTypeVo.getbDataTypeEnglish(), bigSmallDataTypeVo.getbDataType())
+                        .replaceAll("\"", "").replaceAll("," , " ").replaceAll("\\{","").replaceAll("\\}", "")
+                        .replaceAll("\\[", "").replaceAll("\\]", ""));
+            }
+            //把小数据类型的英文替换成小数据类型的中文
+            if(applyDataVO.getDataType().contains(bigSmallDataTypeVo.getsDataTypeEnglish())){
+                applyDataVO.setDataType(applyDataVO.getDataType()
+                        .replace(bigSmallDataTypeVo.getsDataTypeEnglish(), bigSmallDataTypeVo.getsDataType())
+                        .replaceAll("\"", "").replaceAll("," , " ").replaceAll("\\{","").replaceAll("\\}", "")
+                        .replaceAll("\\[", "").replaceAll("\\]", ""));
+            }
+        }
     }
 
     /**

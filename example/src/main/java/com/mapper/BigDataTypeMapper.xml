@@ -16,6 +16,10 @@
         SELECT <include refid="base_column_list"/> FROM bigdatatypes;
     </select>
 
+    <select id="getBigDataTypeByName" parameterType="String" resultMap="result">
+        SELECT <include refid="base_column_list"/> FROM bigdatatypes WHERE data_type_english = #{dataTypeEnglish};
+    </select>
+
     <insert id="saveBigDataType" parameterType="bigDataType">
         INSERT INTO bigdatatypes(data_type, data_type_english) VALUES(#{dataType}, #{dataTypeEnglish})
     </insert>

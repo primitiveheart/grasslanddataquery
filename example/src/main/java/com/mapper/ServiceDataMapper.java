@@ -23,4 +23,11 @@ public interface ServiceDataMapper {
                                                             @Param("startYear")Integer startYear, @Param("endYear")Integer endYear);
 
     List<ServiceData> acquiredServiceDataPageData(@Param("start") Integer start, @Param("length") Integer length);
+
+    /**
+     * 通过小的数据类型获取所的年份
+     * @param smallDataTypeEnglish
+     * @return
+     */
+    List<String> listYearBySmallDataTypeEnglish(String smallDataTypeEnglish);
 }

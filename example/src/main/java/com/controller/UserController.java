@@ -79,8 +79,8 @@ public class UserController {
         }else if(queryUser.getPassword().equals(user.getPassword())){
             //在session中保存用户身份信息
             session.setAttribute("user", queryUser);
-            //重新定向到查询页面
-            return "redirect:query.html";
+            //重新定向到住页面
+            return "redirect:home.html";
         }else{
             //密码不正确
             String psdErrorMsg = "密码不正确";

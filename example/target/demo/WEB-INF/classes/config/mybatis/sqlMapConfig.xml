@@ -8,5 +8,7 @@
         <typeAlias type="com.entity.ApplyData" alias="applyData"/>
         <typeAlias type="com.entity.BigDataType" alias="bigDataType"/>
         <typeAlias type="com.entity.ServiceData" alias="serviceData"/>
+        <typeAlias type="com.entity.SmallDataType" alias="smallDataType"/>
+        <typeAlias type="com.vo.BigSmallDataTypeVo" alias="bigSmallDataTypeVo"/>
     </typeAliases>
 </configuration>
