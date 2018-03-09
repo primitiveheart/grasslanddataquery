@@ -10,7 +10,7 @@
 	<div>秒后，转入到主界面。</div>
 	<%
 		//转向语句
-		response.setHeader("Refresh","3;URL=query.html");
+		response.setHeader("Refresh","3;URL=home.html");
 	 %>
 
 </body>

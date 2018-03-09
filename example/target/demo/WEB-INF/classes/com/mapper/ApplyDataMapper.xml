@@ -50,4 +50,8 @@
         SELECT <include refid="base_column_list"/> FROM applydatas WHERE id = #{id}
     </select>
 
+    <delete id="deleteApplyData" parameterType="Integer">
+        DELETE FROM applydatas WHERE id = #{id}
+    </delete>
+
 </mapper>

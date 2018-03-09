@@ -4,10 +4,10 @@
         <title>用户注册页面</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/>
-        <link href="resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
-        <script src="resources/js/jquery-3.2.1.js"></script>
-        <script src="resources/js/semantic.min.js"></script>
+        <link href="../resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <script src="../resources/js/jquery-3.2.1.js"></script>
+        <script src="../resources/js/semantic.min.js"></script>
     </head>
     <body>
     <#--引入页面头部-->
@@ -22,7 +22,7 @@
                         <div class="field">
                             <label class="">用户名</label>
                             <input type="text" name="username" placeholder=""/>
-                        </div>${errorMsg}
+                        </div>
                         <div class="field">
                             <label class="">昵称</label>
                             <input type="text" name="nickname" placeholder=""/>

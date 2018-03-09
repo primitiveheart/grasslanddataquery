@@ -14,6 +14,9 @@
         <#--页面内容-->
         <div class="content_">
             <div>
+                <div class="ui back button">
+                    返回
+                </div>
                 <div id="result">
                     <h2>查询结果如下...</h2>
                     <h3>
@@ -56,6 +59,15 @@
     </body>
     <script language="JavaScript">
         $(document).ready(function () {
+            var temp = "${request.requestURI}";
+            console.log(temp);
+            //返回
+            $(".ui.back.button").on("click", function(){
+
+
+                $(location).attr("href",);
+            })
+
             var tables = $("table");
             var latitude = ${latitude};
             var longitude = ${longitude};

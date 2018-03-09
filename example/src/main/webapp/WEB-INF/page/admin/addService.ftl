@@ -310,7 +310,7 @@
             "serverSide":true,
             "pageLength":5,
             "language":{
-                "url":"../chinese.json"
+                "url":"../common/chinese.json"
             },
             "ajax":{
                 "url":"listService.html",

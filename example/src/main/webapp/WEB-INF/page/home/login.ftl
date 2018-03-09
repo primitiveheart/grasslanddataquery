@@ -4,10 +4,10 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/>
 
-        <link href="resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
-        <script src="resources/js/jquery-3.2.1.js"></script>
-        <script src="resources/js/semantic.min.js"></script>
+        <link href="../resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <script src="../resources/js/jquery-3.2.1.js"></script>
+        <script src="../resources/js/semantic.min.js"></script>
 
         <title>登陆界面</title>
     </head>
@@ -20,7 +20,7 @@
                <div class="ui three column stackable grid">
                    <div class="column"></div>
                    <div class="column">
-                       <form id="login" class="ui fluid form segment" action="loginValidation.html" method="post">
+                       <form id="login" class="ui fluid form segment" action="loginUp.html">
                            <div class="field">
                                <label class="">用户名</label>
                                <div class="ui left icon input">
@@ -30,7 +30,6 @@
                                        <i class="icon asterisk"></i>
                                    </div>
                                </div>
-                           ${userErrorMsg}
                            </div>
                            <div class="field">
                                <label class="">密码</label>
@@ -41,7 +40,6 @@
                                        <i class="icon asterisk"></i>
                                    </div>
                                </div>
-                           ${psdErrorMsg}
                            </div>
                            <div class="inline field">
                                <div class="ui checkbox">
@@ -64,7 +62,16 @@
     </body>
     <script type="application/javascript" language="JavaScript">
         $(document).ready(function(){
+            //注册
+            $(".ui.register").on("click", function () {
+                $(location).attr("href", "register.html");
+            })
+
+            //登录
             $('.ui.form').form({
+                inline : true,
+                on     : 'blur',
+                fields:{
                         userName: {
                             identifier : 'username',
                             rules: [
@@ -88,31 +95,26 @@
                             ]
                         }
                     },
-                    {
-                        inline : true,
-                        on     : 'blur',
-                        onSuccess: submitForm
+                    onValid:function () {
+                        var selector = $(this).attr("name");
+                        var value = $(this).val();
+                        $.ajax({
+                            url:"loginValidation.html",
+                            type:"post",
+                            data:{
+                                name: selector,
+                                value: value
+                            },
+                            success: function(result){
+                                if(result.type == "username"){
+                                    $(".ui.form").form('add prompt', "username", "用户名不存在");
+                                }else if(result.type == "password"){
+                                    $(".ui.form").form('add prompt', "password", "密码不正确");
+                                }
+                            }
+                        })
                     }
-            );
-
-            $(".ui.form").submit(function (e) {
-                return false;
-            });
-            $(".ui.checkbox").checkbox();
-
-            $(".ui.register").on("click", function () {
-                window.location.href ="register.html";
-            })
+                })
         })
-        function submitForm() {
-            var formData = $(".ui.form input").serializeArray();
-            formData = $.param(formData);
-            window.location.href = "loginValidation.html?"+formData;
-//            $.ajax({
-//                type:"POST",
-//                url:"loginValidation.html",
-//                data:formData
-//            })
-        }
     </script>
 </html>

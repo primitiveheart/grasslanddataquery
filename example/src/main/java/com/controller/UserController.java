@@ -1,14 +1,15 @@
 package com.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.entity.User;
 import com.mapper.UserMapper;
+import com.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -24,23 +25,63 @@ public class UserController {
      * 登录
      * @return
      */
-    @RequestMapping("login.html")
-    public String login(HttpServletRequest request, @RequestParam(required = false) String userErrorMsg, @RequestParam(required = false) String psdErrorMsg){
-        request.setAttribute("userErrorMsg", userErrorMsg);
-        request.setAttribute("psdErrorMsg", psdErrorMsg);
-        return "login";
+    @RequestMapping("{path}/login.html")
+    public String login(HttpServletRequest request, @PathVariable("path") String path){
+        return path + "/login";
     }
 
+    /**
+     * 登录有效
+     * @return
+     */
+    @RequestMapping(value = "{path}/loginUp.html")
+    public String loginUp(@PathVariable("path") String path) throws Exception{
+        return "redirect:home.html";
+    }
 
+    /**
+     * 登录验证
+     * @param request
+     * @param response
+     * @param name
+     * @param value
+     * @throws Exception
+     */
+    @RequestMapping(value = "{path}/loginValidation.html",method = RequestMethod.POST)
+    @ResponseBody
+    public void loginValidation(HttpServletRequest request, HttpServletResponse response, String name,
+                                String value, @PathVariable("path") String path) throws Exception{
+        JSONObject jsonObject = new JSONObject();
+        HttpSession session = request.getSession();
+        //调用service进行用户身份验证
+        User queryUser = userMapper.getUserByUsername(value);
+        if(queryUser == null){
+            //用户名和密码
+            User existUser = (User) session.getAttribute("user");
+            if(existUser == null){
+                //用户名不存在
+                jsonObject.put("type", name);
+            }else{
+                if(!value.equals(existUser.getPassword())){
+                    //用户名存在，但是密码不正确
+                    jsonObject.put("type", name);
+                }
+            }
+
+        }else{
+            session.setAttribute("user", queryUser);
+        }
+
+        ResponseUtil.renderJson(response, jsonObject);
+    }
 
     /**
      * 注册
      * @return
      */
-    @RequestMapping("register.html")
-    public String register(HttpServletRequest request, @RequestParam(required = false) String errorMsg){
-        request.setAttribute("errorMsg", errorMsg);
-        return "register";
+    @RequestMapping("{path}/register.html")
+    public String register(HttpServletRequest request, @PathVariable("path") String path){
+        return path + "/register";
     }
 
     /**
@@ -48,8 +89,8 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("registerValidation.html")
-    public String registerValidation(User user){
+    @RequestMapping("{path}/registerValidation.html")
+    public String registerValidation(User user, @PathVariable("path") String path){
         User queryUser = userMapper.getUserByUsername(user.getUsername());
         if(queryUser == null){
             user.setUserType("1");
@@ -57,34 +98,7 @@ public class UserController {
             return "redirect:login.html";
         }else{
             //用户名存在
-            String errorMsg = "用户名存在";
-            return "redirect:register.html?errorMsg="+ errorMsg;
-        }
-    }
-
-    /**
-     * 登录验证
-     * @param session
-     * @param user
-     * @return
-     */
-    @RequestMapping(value = "loginValidation.html",method = RequestMethod.GET)
-    public String loginValidation(HttpSession session, User user) throws Exception{
-        //调用service进行用户身份验证
-        User queryUser = userMapper.getUserByUsername(user.getUsername());
-        if(queryUser == null){
-            //用户不存在
-            String userErrorMsg = "用户不存在";
-            return "redirect:login.html?userErrorMsg=" + userErrorMsg;
-        }else if(queryUser.getPassword().equals(user.getPassword())){
-            //在session中保存用户身份信息
-            session.setAttribute("user", queryUser);
-            //重新定向到住页面
-            return "redirect:home.html";
-        }else{
-            //密码不正确
-            String psdErrorMsg = "密码不正确";
-            return "redirect:login.html?psdErrorMsg=" + psdErrorMsg;
+            return "redirect:register.html";
         }
     }
 
@@ -94,8 +108,8 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("logout.html")
-    public String logout(HttpSession session) throws Exception{
+    @RequestMapping("{path}/logout.html")
+    public String logout(HttpSession session, @PathVariable("path") String path) throws Exception{
         //清除session
         session.invalidate();
         //重新定向到登录页面

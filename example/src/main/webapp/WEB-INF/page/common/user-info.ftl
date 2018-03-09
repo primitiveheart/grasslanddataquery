@@ -2,10 +2,9 @@
     <div class="ui five column row">
         <div class="column">
             <a href="home.html" class="admin">主页</a>
-            <a href="query.html" class="user">主页</a>
+            <a href="home.html" class="user">主页</a>
         </div>
         <div class="column">
-            <a href="home.html" class="admin">用户数据管理</a>
             <a href="lookupResult.html" class="user">查看结果</a>
         </div>
         <div class="column"><a href="addService.html" class="admin">数据管理</a></div>

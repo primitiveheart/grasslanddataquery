@@ -24,4 +24,6 @@ public interface ApplyDataMapper {
    ApplyData queryApplyDataById(Integer id);
 
    ApplyData acquiredApplyDataById(Integer id);
+
+   void deleteApplyData(Integer id);
 }

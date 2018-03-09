@@ -2,14 +2,13 @@
 <html xmlns="http://www.w3.org/1999/html">
     <head>
         <title>查询</title>
-        <link href="resources/My97DatePicker/skin/WdatePicker.css"/>
-        <link href="resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/user-info.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/plugins/calendar.min.css" rel="stylesheet">
-        <script src="resources/js/jquery-3.2.1.js"></script>
-        <script src="resources/js/semantic.min.js"></script>
-        <script src="resources/js/plugins/calendar.min.js"></script>
+        <link href="../resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/user-info.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/plugins/calendar.min.css" rel="stylesheet">
+        <script src="../resources/js/jquery-3.2.1.js"></script>
+        <script src="../resources/js/semantic.min.js"></script>
+        <script src="../resources/js/plugins/calendar.min.js"></script>
 
     </head>
     <body>

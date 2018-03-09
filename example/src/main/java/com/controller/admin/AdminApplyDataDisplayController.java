@@ -1,34 +1,42 @@
-package com.controller;
+package com.controller.admin;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.common.AcquireGeoseverData;
 import com.entity.ApplyData;
+import com.entity.BBox;
+import com.entity.ServiceData;
 import com.entity.User;
 import com.mapper.ApplyDataMapper;
 import com.mapper.ServiceDataMapper;
 import com.mapper.SmallDataTypeMapper;
 import com.mapper.UserMapper;
+import com.util.JSONType;
 import com.util.ResponseUtil;
 import com.util.ToolUtils;
 import com.vo.ApplyDataVO;
 import com.vo.BigSmallDataTypeVo;
+import com.vo.DataTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.TagUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.*;
 
 /**
- * Created by admin on 2017/10/17.
+ * Created by admin on 2018/1/24.
  */
 @Controller
-public class ListController {
+@RequestMapping("admin")
+public class AdminApplyDataDisplayController {
 
     @Autowired
     private ApplyDataMapper applyDataMapper;
@@ -37,21 +45,18 @@ public class ListController {
     private UserMapper userMapper;
 
     @Autowired
-    private ServiceDataMapper serviceDataMapper;
-
-    @Autowired
     private SmallDataTypeMapper smallDataTypeMapper;
+
 
     @RequestMapping(value = "acquireApplyData.html")
     @ResponseBody
-    public void acquireApplyData(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) Integer draw,
+    public void acquireApplyData(HttpServletResponse response, @RequestParam(required = false) Integer draw,
                                  @RequestParam(required = false) Integer start, @RequestParam(required = false)Integer length){
-        User existUser = (User) request.getSession().getAttribute("user");
         JSONObject result = new JSONObject();
 
-        Integer recordsTotal = applyDataMapper.applyDataTotalByUserId(existUser.getId());
-        Integer recordsFiltered = applyDataMapper.applyDataTotalByUserId(existUser.getId());
-        List<ApplyData> page = applyDataMapper.acquiredPageDataByUserId(start, length, existUser.getId());
+        Integer recordsTotal = applyDataMapper.applyDataTotal();
+        Integer recordsFiltered = applyDataMapper.applyDataTotal();
+        List<ApplyData> page = applyDataMapper.acquiredPageData(start, length);
 
         //获取所有的小的数据类型
         List<BigSmallDataTypeVo> bigSmallDataTypeVos = smallDataTypeMapper.getAllBigSmallDataType();
@@ -59,7 +64,9 @@ public class ListController {
         List<ApplyDataVO> data = new ArrayList<ApplyDataVO>();
         for(int i=0; i<page.size(); i++){
             ApplyData applyData = page.get(i);
+            User user = userMapper.getUserById(applyData.getUserId());
             ApplyDataVO applyDataVO = new ApplyDataVO(applyData);
+            applyDataVO.setUsername(user.getUsername());
 
             ToolUtils.transferEnglishToChinese(bigSmallDataTypeVos, applyDataVO);
 
@@ -75,33 +82,27 @@ public class ListController {
         ResponseUtil.renderJson(response, result);
     }
 
-
     /**
-     *  地图方式的获取的数据
-     * @param request
-     * @param type 小的数据类型
-     * @return
+     * @param response
+     * @param id applydata类中的id
      */
-    @RequestMapping("mapMethod.html")
-    public String mapMethod(HttpServletRequest request, String type){
-
-        List<String> allYear = serviceDataMapper.listYearBySmallDataTypeEnglish(type);
-        request.setAttribute("allYear", allYear);
-        request.setAttribute("type", type);
-
-        return "map-method";
-    }
-
-    @RequestMapping("lookupResult.html")
-    public String lookupResult(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if(user == null){
-            return "forward:login.html";
-        }else{
-            return "lookup-result";
+    @RequestMapping(value = "updateApplyData.html", method = RequestMethod.POST)
+    @ResponseBody
+    public void updateApplyData(HttpServletResponse response , Integer id){
+        //根据id获取applydata数据
+        ApplyData applyData = applyDataMapper.acquiredApplyDataById(id);
+        if(applyData.getStatus().equals("审核中")){
+            //更新数据
+            if(applyData != null){
+                applyData.setStatus("审核通过");
+                applyDataMapper.updateApplyData(applyData);
+            }
+        }else if(applyData.getStatus().equals("审核通过")){
+            //更新数据
+            if(applyData != null){
+                applyData.setStatus("审核中");
+                applyDataMapper.updateApplyData(applyData);
+            }
         }
     }
-
 }

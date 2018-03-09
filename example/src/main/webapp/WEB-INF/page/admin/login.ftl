@@ -20,7 +20,7 @@
         <div class="ui three column stackable grid">
             <div class="column"></div>
             <div class="column">
-                <form id="login" class="ui fluid form segment" action="loginValid.html" method="post">
+                <form id="login" class="ui fluid form segment" action="loginUp.html">
                     <div class="field">
                         <label class="">用户名</label>
                         <div class="ui left icon input">

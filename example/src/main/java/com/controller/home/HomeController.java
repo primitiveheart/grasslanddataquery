@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.home;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -32,7 +32,8 @@ import java.util.*;
  * Created by admin on 2017/10/9.
  */
 @Controller
-public class QueryController {
+@RequestMapping("home")
+public class HomeController {
 
     @Autowired
     private UserMapper userMapper;
@@ -64,7 +65,7 @@ public class QueryController {
         }
 
         request.setAttribute("bigSmallDataTypeVos",bigSmallDataTypeVoMap);
-        return "home";
+        return "/home/home";
     }
 
     /**
@@ -83,7 +84,7 @@ public class QueryController {
         List<BigDataType> bigDataTypes = bigDataTypeMapper.acquiredAllBigDataType();
 
         if(user == null){
-            return "redirect:login";
+            return "redirect:home/login";
         }else {
             JSONObject dataJson = new JSONObject();
             //来判断请求中是否含有大数据类型的字段

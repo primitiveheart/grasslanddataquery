@@ -4,15 +4,15 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/>
 
-    <link href="resources/css/plugins/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
-    <link href="resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/css/user-info.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/plugins/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
+    <link href="../resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/user-info.css" rel="stylesheet" type="text/css"/>
 
-    <script src="resources/js/jquery-3.2.1.js"></script>
-    <script src="resources/js/plugins/jquery.dataTables.min.js"></script>
-    <script src="resources/js/semantic.min.js"></script>
-    <script src="resources/js/chinese.js"></script>
+    <script src="../resources/js/jquery-3.2.1.js"></script>
+    <script src="../resources/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="../resources/js/semantic.min.js"></script>
+    <script src="../resources/js/chinese.js"></script>
 
     <title>用户查看结果界面</title>
 </head>
@@ -43,7 +43,7 @@
 <#--引入页面底部-->
 <#include "/common/footer.ftl">
 </body>
-<script src="resources/js/date.js"></script>
+<script src="../resources/js/date.js"></script>
 <script>
     $(document).ready(function(){
        var table =  $("#applyDataDisplay").DataTable({
@@ -60,7 +60,7 @@
 //                }
 //            },
             "language":{
-                "url":"common/chinese.json"
+                "url":"../common/chinese.json"
             },
             "columns":[
                 {"data": "startYear"},
@@ -83,7 +83,7 @@
                     "data": "status",
                     "render" : function (data, type, row) {
                         if(data == "审核通过"){
-                            return '<p style="color: #1aa62a">审核通过</p><a class="ui blue" href="common/lookup.html?id='+row.id+'">查看</>';
+                            return '<p style="color: #1aa62a">审核通过</p><a class="ui blue" href="../common/lookup.html?id='+row.id+'">查看</>';
                         }else if(data == "审核中"){
                             return '<p style="color: #ef404a">审核中</p>';
                         }
@@ -98,7 +98,7 @@
         //删除
         $(".ui.button").on("click", function(){
             var id = $(this).attr("data-id");
-//            $(location).attr("href", "lookup.html?id=" + id);
+            $(location).attr("href", "deleteApplyData.html?id=" + id);
         })
     })
 

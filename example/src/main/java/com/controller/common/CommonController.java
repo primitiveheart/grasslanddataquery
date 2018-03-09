@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.common;
 
 import com.alibaba.fastjson.JSONObject;
 import com.common.AcquireGeoseverData;

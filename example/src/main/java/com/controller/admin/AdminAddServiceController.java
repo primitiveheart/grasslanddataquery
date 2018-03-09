@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.entity.BigDataType;
