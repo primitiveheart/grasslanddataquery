@@ -2,13 +2,13 @@
 <html>
     <head>
         <title>最低温度列表</title>
-        <link href="resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/user-info.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" type="text/css" href="resources/css/plugins/ol.css"/>
-        <script src="resources/js/jquery-3.2.1.js"></script>
-        <script src="resources/js/semantic.min.js"></script>
-        <script src="resources/js/plugins/ol.js"></script>
+        <link href="../resources/css/semantic.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/user-info.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="../resources/css/plugins/ol.css"/>
+        <script src="../resources/js/jquery-3.2.1.js"></script>
+        <script src="../resources/js/semantic.min.js"></script>
+        <script src="../resources/js/plugins/ol.js"></script>
 
     </head>
     <body>
@@ -49,16 +49,6 @@
         <#include "/common/footer.ftl" />
     </body>
     <script type="application/javascript" language="JavaScript">
-        $(document).ready(function () {
-            $(".look").on("click", function () {
-                $(".table").hide();
-                var middleLayer = $(this).attr("data-layer");
-                var year = $(this).attr("data-year");
-                $(".title_year").append("-"+year);
-                init(middleLayer);
-            })
-        })
-
         var map;
         function init(middleLayer) {
             //投影坐标系
@@ -79,7 +69,7 @@
                 })
             });
 
-           var osm =  new ol.layer.Tile({
+            var osm =  new ol.layer.Tile({
                 source: new ol.source.OSM()
             })
 
@@ -96,5 +86,17 @@
                 })
             });
         }
+
+        $(document).ready(function () {
+            $(".look").on("click", function () {
+                $(".table").hide();
+                var middleLayer = $(this).attr("data-layer");
+                var year = $(this).attr("data-year");
+                $(".title_year").append("-"+year);
+                init(middleLayer);
+            })
+        })
+
+
     </script>
 </html>
