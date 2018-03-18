@@ -6,10 +6,13 @@
         <link href="../resources/css/main.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/css/user-info.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/css/plugins/calendar.min.css" rel="stylesheet">
+        <link href="../resources/css/plugins/ol.css" rel="stylesheet" type="text/css">
         <script src="../resources/js/jquery-3.2.1.js"></script>
         <script src="../resources/js/semantic.min.js"></script>
         <script src="../resources/js/plugins/calendar.min.js"></script>
 
+        <script src="../resources/js/plugins/ol.js"></script>
+        <script src="../resources/js/getBaiduMap.js"></script>
     </head>
     <body>
         <#--引入页面头部-->
@@ -23,15 +26,86 @@
                    <h3>本数据集是依据地面样本(采样)点数据、空间分析模型及估算模型获得，具体生成过程及精度分析结果[待补充]</h3><br/>
                 </div>
             </div>
+
             <div class="ui secondary pointing menu">
                 <a class="active item" data-tab="coordinate">
-                    <i class="map outline icon"></i>坐标</a>
+                    <i class="map outline icon"></i>地图</a>
                 <a class="item" data-tab="map">
-                    <i class="map icon"></i>地图</a>
+                    <i class="map icon"></i>坐标</a>
             </div>
-            <div class="ui tab active segment" data-tab="coordinate">
-                <form action="saveApplyData.html" method="post" id="form">
 
+
+            <div class="ui active tab segment" data-tab="map">
+                <form action="saveApplyData.html" method="post" id="map_form">
+                    <div class="ui big header">请您选择位置</div>
+                    <div class="ui input inline field">
+                        <label>纬度</label>
+                        <input type="text" name="latitude" placeholder="请您输入纬度" readonly="readonly"/>
+                    </div>
+
+                    <div class="ui input inline field">
+                        <label>经度</label>
+                        <input type="text" name="longitude" placeholder="请您输入经度" readonly="readonly">
+                    </div>
+                    <div id="baidu_map">
+
+                    </div>
+
+
+
+                    <div class="ui big header">数据选择(请选择需要查询的数据)</div>
+
+                    <#if bigSmallDataTypeVos?? && bigSmallDataTypeVos?size gt 0>
+                        <#list bigSmallDataTypeVos?keys as key>
+                            <div class="ui small header">${key}</div>
+                            <div class="field">
+
+                                <select multiple=""name="${bigSmallDataTypeVos[key][0].bDataTypeEnglish}" class="ui search fluid normal dropdown">
+                                    <#list bigSmallDataTypeVos[key] as bigSmallDataTypeVo>
+                                        <option  value="${bigSmallDataTypeVo.sDataTypeEnglish}">${bigSmallDataTypeVo.sDataType}</option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </#list>
+                    </#if>
+
+                    <div class="ui big header">查询年份(带*的数据为静态数据，不受年份控制)</div>
+                    <div class="inline field">
+                        <label>开始日期</label>
+                        <div class="ui calendar" id="startDate" >
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="请您选择时间的起始" name="startYear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inline field">
+                        <label>结束日期</label>
+                        <div class="ui calendar" id="endDate" >
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="请您选择时间的结束" name="endYear"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button class="ui button" type="submit">提交</button>
+                </form>
+            <#--<#if bigSmallDataTypeVos?? && bigSmallDataTypeVos?size gt 0>-->
+            <#--<#list bigSmallDataTypeVos?keys as key>-->
+            <#--<div class="ui small header">${key}</div>-->
+            <#--<ul>-->
+            <#--<#list bigSmallDataTypeVos[key] as bigSmallDataTypeVo>-->
+            <#--<li><a href="mapMethod.html?type=${bigSmallDataTypeVo.sDataTypeEnglish}">${bigSmallDataTypeVo.sDataType}</a></li>-->
+            <#--</#list>-->
+            <#--</ul>-->
+            <#--</#list>-->
+            <#--</#if>-->
+            </div>
+
+            <div class="ui tab segment" data-tab="coordinate">
+                <form action="saveApplyData.html" method="post" id="form">
                     <div class="ui big header">所在位置(请输入经纬度坐标，如41.25,103.45)</div>
                     <div class="ui input inline field">
                         <label>纬度</label>
@@ -64,52 +138,6 @@
                         </#list>
                     </#if>
 
-                    <#--<div class="ui small header">气象数据</div>-->
-                    <#--<div class="field">-->
-                        <#--<select multiple="" name="weather" class="ui weather search fluid normal dropdown">-->
-                            <#--<option  value="tempature_min">最低温度(月)</option>-->
-                            <#--<option  value="tempature_max">最高温度(月)</option>-->
-                            <#--<option  value="tempature_average">平均温度(月)</option>-->
-                            <#--<option  value="sumRainfall">累积降雨量(月)</option>-->
-                            <#--<option  value="solarRadition">太阳辐射(月)</option>-->
-                        <#--</select>-->
-                    <#--</div>-->
-
-                    <#--<div class="ui small header">土壤数据</div>-->
-                    <#--<div class="field">-->
-                        <#--<div class="ui checkbox">-->
-                            <#--<input type="checkbox" name="soil" value="solarType_*"/>-->
-                            <#--<label>*土壤类型（亚类）</label>-->
-                        <#--</div>-->
-                    <#--</div>-->
-
-                    <#--<div class="ui small header">植被数据</div>-->
-                    <#--<div class="field">-->
-                        <#--<select multiple="" name="vegetation" class="ui vegetation search fluid normal dropdown">-->
-                            <#--<option value="grassLandVegetationType_*">*草地植被类型(亚类-型)</option>-->
-                            <#--<option value="NDVI">NDVI(月最大合成)</option>-->
-                            <#--<option value="LAI">叶面积指数(LAI)</option>-->
-                        <#--</select>-->
-                    <#--</div>-->
-
-                    <#--<div class="ui small header">地形数据</div>-->
-                   <#--<div class="field">-->
-                       <#--<select multiple="" name="terrain" class="ui terrain search fluid normal dropdown">-->
-                           <#--<option value="altitude_*">*高程</option>-->
-                           <#--<option value="gradient_*">*坡度(度)</option>-->
-                           <#--<option value="exposure_*">*坡向</option>-->
-                       <#--</select>-->
-                   <#--</div>-->
-
-                    <#--<div class="ui small header">固碳现状</div>-->
-                    <#--<div class="field">-->
-                        <#--<select multiple="" name="carbon" class="ui carbon search fluid normal dropdown">-->
-                            <#--<option value="vegetationPrimaryProductivity">植被净生产力</option>-->
-                            <#--<option value="storageOfSoilOrganicCarbon">土壤有机碳储量</option>-->
-                        <#--</select>-->
-                    <#--</div>-->
-
-
                     <div class="ui big header">查询年份(带*的数据为静态数据，不受年份控制)</div>
                     <div class="inline field">
                         <label>开始日期</label>
@@ -134,25 +162,25 @@
                     <button class="ui button" type="submit">提交</button>
                 </form>
             </div>
-            <div class="ui tab segment" data-tab="map">
 
-                <#if bigSmallDataTypeVos?? && bigSmallDataTypeVos?size gt 0>
-                    <#list bigSmallDataTypeVos?keys as key>
-                        <div class="ui small header">${key}</div>
-                        <ul>
-                            <#list bigSmallDataTypeVos[key] as bigSmallDataTypeVo>
-                                <li><a href="mapMethod.html?type=${bigSmallDataTypeVo.sDataTypeEnglish}">${bigSmallDataTypeVo.sDataType}</a></li>
-                            </#list>
-                        </ul>
-                    </#list>
-                </#if>
-            </div>
         </div>
         <#--引入页面底部-->
         <#include "/common/footer.ftl"/>
     </body>
     <script type="application/javascript" language="JavaScript">
+
         $(document).ready(function(){
+
+            //得到百度地图
+            var map = getBaiduMap();
+
+            map.addEventListener("click", function (evt) {
+                var coord = evt.coordinate;
+                var coordTransform = ol.proj.transform(coord, "EPSG:3857", "EPSG:4326");
+                $("#map_form input[name=latitude]").val(coordTransform[1]);
+                $("#map_form input[name=longitude]").val(coordTransform[0]);
+            })
+
             $(".menu .item").on("click", function () {
                 $(".menu .item").removeClass("active");
                 $(this).addClass("active");
@@ -181,39 +209,5 @@
 
         })
 
-
-        function addYearTable(year_selector, startY, endY, type){
-            year_selector.append("<tr>");
-            year_selector.append("<td>年份</td>");
-            for(var i = 1; i<= 12; i++){
-                year_selector.append("<td>" + i + "月</td>");
-            }
-            year_selector.append("</tr>");
-
-            for( var i = startY ; i <= endY; i++){
-                year_selector.append("<tr>")
-                year_selector.append("<td>"+ i + "</td>");
-                var middle = type[i-startY];
-                var middle_band = middle.split(",");
-                for(var j = 0; j < middle_band.length - 1; j++){
-                    year_selector.append("<td>" + middle_band[j] +"</td>");
-                }
-                year_selector.append("</tr>");
-            }
-        }
-        function formatArray(array, type) {
-            var dataArray = {};
-            $.each(array, function () {
-                if(dataArray[this.name]){
-                    if(!dataArray[this.name].push){
-                        dataArray[this.name] = [dataArray[this.name]];
-                    }
-                    dataArray[this.name].push(this.value || '');
-                }else{
-                    dataArray[this.name] = this.value || '';
-                }
-            });
-            return ((type == "json") ? JSON.stringify(dataArray) : dataArray);
-        }
     </script>
 </html>

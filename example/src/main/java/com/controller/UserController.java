@@ -34,8 +34,8 @@ public class UserController {
      * 登录有效
      * @return
      */
-    @RequestMapping(value = "{path}/loginUp.html")
-    public String loginUp(@PathVariable("path") String path) throws Exception{
+    @RequestMapping(value = "{path}/loginUp.html", method = RequestMethod.POST)
+    public String loginUp() throws Exception{
         return "redirect:home.html";
     }
 
@@ -53,23 +53,49 @@ public class UserController {
                                 String value, @PathVariable("path") String path) throws Exception{
         JSONObject jsonObject = new JSONObject();
         HttpSession session = request.getSession();
+
         //调用service进行用户身份验证
         User queryUser = userMapper.getUserByUsername(value);
-        if(queryUser == null){
-            //用户名和密码
-            User existUser = (User) session.getAttribute("user");
-            if(existUser == null){
-                //用户名不存在
-                jsonObject.put("type", name);
-            }else{
-                if(!value.equals(existUser.getPassword())){
-                    //用户名存在，但是密码不正确
-                    jsonObject.put("type", name);
-                }
-            }
 
+        if(path.equals("admin")){
+            if(queryUser == null){
+                //用户名和密码
+                User existUser = (User) session.getAttribute("admin");
+                if(existUser == null){
+                    //用户名不存在
+                    jsonObject.put("type", name);
+                }else{
+                    if(!value.equals(existUser.getPassword())){
+                        //用户名存在，但是密码不正确
+                        jsonObject.put("type", name);
+                    }
+                }
+            }else{
+                if(queryUser.getUserType().equals("0")){
+                    session.setAttribute("admin", queryUser);
+                }else{
+                    //用户不是管理员用户
+                    jsonObject.put("type",name);
+                }
+
+            }
         }else{
-            session.setAttribute("user", queryUser);
+            if(queryUser == null){
+                //用户名和密码
+                User existUser = (User) session.getAttribute("user");
+                if(existUser == null){
+                    //用户名不存在
+                    jsonObject.put("type", name);
+                }else{
+                    if(!value.equals(existUser.getPassword())){
+                        //用户名存在，但是密码不正确
+                        jsonObject.put("type", name);
+                    }
+                }
+
+            }else{
+                session.setAttribute("user", queryUser);
+            }
         }
 
         ResponseUtil.renderJson(response, jsonObject);

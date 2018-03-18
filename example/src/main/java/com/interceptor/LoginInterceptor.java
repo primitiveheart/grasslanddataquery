@@ -34,12 +34,26 @@ public class LoginInterceptor implements HandlerInterceptor {
         //判断session
         HttpSession session = request.getSession();
         //从session中取出身份信息
-        User user = (User) session.getAttribute("user");
 
-        if(user != null){
-            //身份存在，放行
-            return true;
+
+        if(url.contains("admin")){
+            User user = (User) session.getAttribute("admin");
+            if(user != null){
+                if(user.getUserType().equals("0")){
+                    //身份存在，放行
+                    return true;
+                }
+            }
+        }else{
+            User user = (User) session.getAttribute("user");
+           if(user != null){
+               if(user.getUserType().equals("1")){
+                   //身份存在，放行
+                   return true;
+               }
+           }
         }
+
         //执行到这里表示用户身份需要认证，跳转到登录页面
         request.getRequestDispatcher("login.html").forward(request, response);
 
