@@ -6,14 +6,18 @@ package com.entity;
 public class QueryData {
     private String longitude;
     private String latitude;
+    private String pixelX;
+    private String pixelY;
     private String startYear;
     private String endYear;
 
-    public QueryData(String longitude, String latitude, String startYear, String endYear) {
+    public QueryData(String longitude, String latitude, String pixelX, String pixelY, String startYear, String endYear) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.startYear = startYear;
         this.endYear = endYear;
+        this.pixelX = pixelX;
+        this.pixelY = pixelY;
     }
 
     public QueryData(){}
@@ -48,5 +52,21 @@ public class QueryData {
 
     public void setEndYear(String endYear) {
         this.endYear = endYear;
+    }
+
+    public String getPixelX() {
+        return pixelX;
+    }
+
+    public void setPixelX(String pixelX) {
+        this.pixelX = pixelX;
+    }
+
+    public String getPixelY() {
+        return pixelY;
+    }
+
+    public void setPixelY(String pixelY) {
+        this.pixelY = pixelY;
     }
 }

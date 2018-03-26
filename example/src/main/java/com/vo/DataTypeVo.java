@@ -6,27 +6,27 @@ import java.security.PrivateKey;
  * Created by admin on 2018/3/7.
  */
 public class DataTypeVo {
-    private String latitude;
-    private String longitude;
+    private String pixelX;
+    private String pixelY;
     private Integer startYear;
     private Integer endYear;
     private String bigDataTypeEnglish;
     private String smallDataTypeEnglish;
 
-    public String getLatitude() {
-        return latitude;
+    public String getPixelX() {
+        return pixelX;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setPixelX(String pixelX) {
+        this.pixelX = pixelX;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public String getPixelY() {
+        return pixelY;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setPixelY(String pixelY) {
+        this.pixelY = pixelY;
     }
 
     public Integer getStartYear() {

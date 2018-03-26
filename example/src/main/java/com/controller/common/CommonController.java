@@ -73,8 +73,10 @@ public class CommonController {
         //获取的是数据类型
         String dataType = applyData.getDataType();
 
-        String latitude = applyData.getCoordinate().split(";")[0];
-        String longitude= applyData.getCoordinate().split(";")[1];
+        String latitude = applyData.getCoordinate().split(";")[1];
+        String longitude= applyData.getCoordinate().split(";")[0];
+        String pixelX = applyData.getPixel().split(";")[0];
+        String pixelY = applyData.getPixel().split(";")[1];
         Integer startYear= Integer.valueOf(applyData.getStartTime());
         Integer endYear= Integer.valueOf(applyData.getEndTime());
 
@@ -113,6 +115,8 @@ public class CommonController {
 
         request.setAttribute("latitude", latitude);
         request.setAttribute("longitude", longitude);
+        request.setAttribute("pixelX", pixelX);
+        request.setAttribute("pixelY", pixelY);
         request.setAttribute("startYear", startYear);
         request.setAttribute("endYear", endYear);
 
@@ -128,7 +132,7 @@ public class CommonController {
         List<ServiceData> serviceDatas = serviceDataMapper.queryServiceDataByBigAndSmallDataTypeBetweenYear(dataTypeVo.getBigDataTypeEnglish(),
                 dataTypeVo.getSmallDataTypeEnglish(), dataTypeVo.getStartYear(), dataTypeVo.getEndYear());
 
-        JSONObject bigDataTypes = acquireGeoseverData.getBigDataType(dataTypeVo.getLatitude(), dataTypeVo.getLongitude(), serviceDatas);
+        JSONObject bigDataTypes = acquireGeoseverData.getBigDataType(dataTypeVo.getPixelX(), dataTypeVo.getPixelY(), serviceDatas);
 
         ResponseUtil.renderJson(response, bigDataTypes);
     }

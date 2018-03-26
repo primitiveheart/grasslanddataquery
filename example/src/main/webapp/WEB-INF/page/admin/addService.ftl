@@ -22,7 +22,6 @@
 <#--页面内容-->
 <div class="content_">
 
-        <h4 class="ui top centered attached block header">数据管理</h4>
         <div class="ui bottom attached segment">
             <div class="ui header">大数据类型</div>
             <label>数据类型(中文)</label>

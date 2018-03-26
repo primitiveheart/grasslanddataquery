@@ -96,7 +96,8 @@ public class HomeController {
             }
 
             ApplyData applyData = new ApplyData();
-            applyData.setCoordinate(queryData.getLatitude() + ";" + queryData.getLongitude());
+            applyData.setCoordinate(queryData.getLongitude() + ";" + queryData.getLatitude());
+            applyData.setPixel(queryData.getPixelX() + ";"  + queryData.getPixelY());
             applyData.setStartTime(queryData.getStartYear());
             applyData.setEndTime(queryData.getEndYear());
             ;

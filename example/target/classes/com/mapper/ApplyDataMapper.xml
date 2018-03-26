@@ -5,6 +5,7 @@
     <resultMap id="result" type="applyData">
         <result property="id" column="id"/>
         <result property="coordinate" column="coordinate"/>
+        <result property="pixel" column="pixel"/>
         <result property="dataType" column="data_type"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>
@@ -15,11 +16,12 @@
     </resultMap>
 
     <sql id="base_column_list">
-        id, coordinate, data_type, start_time, end_time, create_time, update_time, status, userId
+        id, coordinate, pixel, data_type, start_time, end_time, create_time, update_time, status, userId
     </sql>
 
     <insert id="addApplyData" parameterType="applyData">
-        INSERT INTO applydatas(coordinate, data_type, start_time, end_time,create_time, update_time, status, userId) VALUES(#{coordinate}, #{dataType}, #{startTime}, #{endTime},now(), #{updateTime}, #{status}, #{userId})
+        INSERT INTO applydatas(coordinate, pixel , data_type, start_time, end_time,create_time, update_time, status, userId)
+        VALUES(#{coordinate},#{pixel}, #{dataType}, #{startTime}, #{endTime},now(), #{updateTime}, #{status}, #{userId})
     </insert>
 
     <select id="applyDataTotal" resultType="Integer">

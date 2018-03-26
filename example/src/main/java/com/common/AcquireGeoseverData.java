@@ -1,5 +1,6 @@
 package com.common;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.entity.BBox;
 import com.entity.ServiceData;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,54 +20,107 @@ import java.util.List;
  */
 @Component
 public class AcquireGeoseverData {
+
     /**
-     * @param latitude
-     * @param longitude
+     * @param pixelX
+     * @param pixelY
      * @param layerName
      * @return
      */
-    public JSONObject getBigDataType(String latitude, String longitude, List<ServiceData> layerName){
+    public JSONObject getBigDataType(String pixelX, String pixelY, List<ServiceData> layerName){
         JSONObject bigDataTypes = new JSONObject();
-        List<String> smallDataTypes = getSmallDataType(latitude, longitude, layerName);
+        List<String> smallDataTypes = getSmallDataType(pixelX, pixelY, layerName);
         bigDataTypes.put("data", smallDataTypes);
         return bigDataTypes;
     }
 
+
     /**
-     * @param latitude
-     * @param longitude
+     * @param pixelX
+     * @param pixelY
      * @param layerName
      * @return
      */
-    public List<String> getSmallDataType(String latitude, String longitude, List<ServiceData> layerName){
+    public List<String> getSmallDataType(String pixelX, String pixelY, List<ServiceData> layerName){
         List<String> smallDataTypes = new ArrayList<String>();
         for(ServiceData serviceData : layerName){
             String layer = serviceData.getLayer();
             //构建url
-            String tempature_min = buildPath(layer,longitude, latitude);
+            String data = buildPath(layer, pixelX , pixelY);
             //解析结果
-            String middle_band = ToolUtils.getTemp(tempature_min);
+//            String middle_band = ToolUtils.getTemp(tempature_min);
+            String middle_band = parserWMSBackData(data);
             smallDataTypes.add(middle_band);
         }
         return smallDataTypes;
     }
 
+
+    /**
+     * {
+     "type": "FeatureCollection",
+     "totalFeatures": "unknown",
+     "features": [
+     {
+     "type": "Feature",
+     "id": "",
+     "geometry": null,
+     "properties": {
+     "Band1": -18.109079360961914,
+     "Band2": -18.855497360229492,
+     "Band3": -9.221680641174316,
+     "Band4": 1.0766217708587646,
+     "Band5": 6.3653974533081055,
+     "Band6": 12.770868301391602,
+     "Band7": 15.39113712310791,
+     "Band8": 13.843870162963867,
+     "Band9": 7.829655647277832,
+     "Band10": 0.6163461208343506,
+     "Band11": -6.789844989776611,
+     "Band12": -17.50874137878418
+     }
+     }
+     ],
+     "crs": null
+     }
+     * @param data
+     * @return
+     */
+    public String parserWMSBackData(String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        String features = jsonObject.getString("features");
+        JSONArray jsonArray = JSONArray.parseArray(features);
+        JSONObject feature = JSONObject.parseObject(jsonArray.getString(0));
+        String properties = feature.getString("properties");
+        JSONObject propertiesJSONObject = JSONObject.parseObject(properties);
+
+        StringBuffer sb = new StringBuffer();
+
+        for(int i = 0; i < properties.split(",").length; i++){
+            sb.append(new DecimalFormat("##.##").format(Double.parseDouble(propertiesJSONObject.getString("Band" +(i+1)))));
+            sb.append(",");
+        }
+
+        return sb.toString();
+    }
+
+
     /**
      * 构建geoserver的wms的一般路径
      * @param layers
-     * @param longitude
-     * @param latitude
+     * @param pixelX
+     * @param pixelY
      * @return
      */
-    public String buildPath(String layers, String longitude, String latitude) {
+    public String buildPath(String layers, String pixelX, String pixelY) {
         BBox bBox = new BBox(73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392);
         String bbox  = bBox.getX() + "," + bBox.getY() + "," + bBox.getWidth() + "," + bBox.getHeight();
         String width = "768";
         String height = "444";
-        String x = longitude;
-        String y = latitude;
+        String x = pixelX;
+        String y = pixelY;
         String url = "http://localhost:8080/grassLandCoverage/wms";
-        String param = "bbox="+ bbox +"&info_format=text/plain&format=application/openlayers&request=GetFeatureInfo&" +
+        String param = "bbox=" + bbox + "&info_format=application/json&format=application/openlayers&request=GetFeatureInfo&" +
                 "layers=" + layers + "&query_layers=" + layers + "&width=" + width + "&height=" + height + "&x=" + x + "&y=" + y;
         String temp = sendGet(url, param);
         return temp;
@@ -105,7 +160,8 @@ public class AcquireGeoseverData {
             br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while((line = br.readLine()) != null){
-                result += line + ",";
+//                result += line + ",";
+                result += line;
             }
         }catch (Exception e){
             try{
@@ -115,6 +171,7 @@ public class AcquireGeoseverData {
             }catch (Exception e2){
                 throw new RuntimeException(e2);
             }
+
         }
         return result;
     }

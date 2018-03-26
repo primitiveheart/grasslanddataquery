@@ -12,6 +12,8 @@ public class ApplyData implements Serializable {
 
     private String coordinate;
 
+    private String pixel;
+
     private String dataType;
 
     private String startTime;
@@ -73,6 +75,14 @@ public class ApplyData implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPixel() {
+        return pixel;
+    }
+
+    public void setPixel(String pixel) {
+        this.pixel = pixel;
     }
 
     public Integer getUserId() {

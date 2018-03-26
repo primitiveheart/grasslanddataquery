@@ -22,9 +22,6 @@
 <#include "/common/user-info.ftl">
 <#--页面内容-->
 <div class="content_">
-
-
-        <h4 class="ui top centered attached block header">管理员给用户授权</h4>
         <div class="ui bottom attached segment">
             <table id="applyDataDisplay" width="100%" class="display cell-border" cellspacing="0">
                 <thead>

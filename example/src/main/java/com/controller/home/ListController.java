@@ -109,7 +109,7 @@ public class ListController {
     public String deleteApplyData(Integer id){
         //删除申请数据
         applyDataMapper.deleteApplyData(id);
-        return "home/look-result";
+        return "home/lookup-result";
     }
 
 }

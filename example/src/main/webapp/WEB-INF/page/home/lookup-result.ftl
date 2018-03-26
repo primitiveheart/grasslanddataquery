@@ -14,6 +14,7 @@
     <script src="../resources/js/semantic.min.js"></script>
     <script src="../resources/js/chinese.js"></script>
 
+
     <title>用户查看结果界面</title>
 </head>
 <body>
@@ -22,7 +23,6 @@
 <#include "/common/user-info.ftl">
 <#--页面内容-->
 <div class="content_">
-    <h4 class="ui top centered attached block header">查看申请的结果</h4>
     <div class="ui bottom attached segment">
         <table id="applyDataDisplay" width="100%" class="display cell-border" cellspacing="0">
             <thead>
@@ -46,19 +46,11 @@
 <script src="../resources/js/date.js"></script>
 <script>
     $(document).ready(function(){
+
        var table =  $("#applyDataDisplay").DataTable({
-//           "sDom": '<"top"fli>rt<"bottom"p><"clear">',
            "pageLength": 5,
             "serverSide":true,
             "ajax": "acquireApplyData.html",
-//            "ajax":{
-//                "url":"acquireApplyData.html",
-//                "type":"post",
-//                "dataSrc":function(json){
-//                    console.log(json);
-//                    return json
-//                }
-//            },
             "language":{
                 "url":"../common/chinese.json"
             },
@@ -83,20 +75,21 @@
                     "data": "status",
                     "render" : function (data, type, row) {
                         if(data == "审核通过"){
-                            return '<p style="color: #1aa62a">审核通过</p><a class="ui blue" href="../common/lookup.html?id='+row.id+'">查看</>';
+                            return '<p style="color: #1aa62a">审核通过</p><a class="ui lookup blue" href="../common/lookup.html?id='+row.id+'">查看</>';
                         }else if(data == "审核中"){
                             return '<p style="color: #ef404a">审核中</p>';
                         }
                     }
                 },
                 {"data": function(obj){
-                    return '<button class="ui green button" data-id="' + obj.id + '">删除</button>';
+                    return '<button class="ui delete green button" data-id="' + obj.id + '">删除</button>';
                 }}
             ]
         });
 
+
         //删除
-        $(".ui.button").on("click", function(){
+        $("#applyDataDisplay tbody").on("click", ".delete", function () {
             var id = $(this).attr("data-id");
             $(location).attr("href", "deleteApplyData.html?id=" + id);
         })

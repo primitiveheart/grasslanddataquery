@@ -136,8 +136,13 @@ public class UserController {
      */
     @RequestMapping("{path}/logout.html")
     public String logout(HttpSession session, @PathVariable("path") String path) throws Exception{
+        if(path.equals("admin")){
+            session.removeAttribute("admin");
+        }else {
+            session.removeAttribute("user");
+        }
         //清除session
-        session.invalidate();
+//        session.invalidate();
         //重新定向到登录页面
         return "redirect:login.html";
     }

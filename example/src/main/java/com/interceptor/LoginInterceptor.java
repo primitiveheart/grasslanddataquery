@@ -44,7 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     return true;
                 }
             }
-        }else{
+        }else if (url.contains("home")){
             User user = (User) session.getAttribute("user");
            if(user != null){
                if(user.getUserType().equals("1")){
@@ -52,6 +52,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                    return true;
                }
            }
+        }else{
+            return true;
         }
 
         //执行到这里表示用户身份需要认证，跳转到登录页面

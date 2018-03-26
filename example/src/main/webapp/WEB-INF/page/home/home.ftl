@@ -28,9 +28,9 @@
             </div>
 
             <div class="ui secondary pointing menu">
-                <a class="active item" data-tab="coordinate">
+                <a class="active item" data-tab="map">
                     <i class="map outline icon"></i>地图</a>
-                <a class="item" data-tab="map">
+                <a class="item" data-tab="coordinate">
                     <i class="map icon"></i>坐标</a>
             </div>
 
@@ -41,13 +41,15 @@
                     <div class="ui input inline field">
                         <label>纬度</label>
                         <input type="text" name="latitude" placeholder="请您输入纬度" readonly="readonly"/>
+                        <input type="hidden" name="pixelY">
                     </div>
 
                     <div class="ui input inline field">
                         <label>经度</label>
                         <input type="text" name="longitude" placeholder="请您输入经度" readonly="readonly">
+                        <input type="hidden" name="pixelX">
                     </div>
-                    <div id="baidu_map">
+                    <div id="baidu_map" style="width: 768px;height: 444px;">
 
                     </div>
 
@@ -110,11 +112,13 @@
                     <div class="ui input inline field">
                         <label>纬度</label>
                         <input type="text" name="latitude" placeholder="请您输入纬度"/>
+                        <input type="hidden" name="pixelY">
                     </div>
 
                     <div class="ui input inline field">
                         <label>经度</label>
                         <input type="text" name="longitude" placeholder="请您输入经度">
+                        <input type="hidden" name="pixelX">
                     </div>
 
                     <div>
@@ -176,9 +180,25 @@
 
             map.addEventListener("click", function (evt) {
                 var coord = evt.coordinate;
+                var pixel = evt.pixel;
                 var coordTransform = ol.proj.transform(coord, "EPSG:3857", "EPSG:4326");
-                $("#map_form input[name=latitude]").val(coordTransform[1]);
-                $("#map_form input[name=longitude]").val(coordTransform[0]);
+                $("#map_form input[name=latitude]").val(new Number(coordTransform[1]).toFixed(2));
+                $("#map_form input[name=longitude]").val(new Number(coordTransform[0]).toFixed(2));
+                $("#map_form input[name=pixelY]").val(Math.floor(pixel[1]));
+                $("#map_form input[name=pixelX]").val(Math.floor(pixel[0]));
+            })
+
+            //转换坐标
+
+            $("#form input[name*=itude]").on("mouseleave", function () {
+                var latitude =  $("#form input[name=latitude]").val();
+                var longitude = $("#form input[name=longitude]").val();
+                if(latitude != "" && longitude != ""){
+                    var coord = ol.proj.transform([parseFloat(longitude), parseFloat(latitude)], "EPSG:4326", "EPSG:3857")
+                    var pixel = map.getPixelFromCoordinate(coord);
+                    $("#form input[name=pixelX]").val(Math.floor(pixel[0]));
+                    $("#form input[name=pixelY]").val(Math.floor(pixel[1]));
+                }
             })
 
             $(".menu .item").on("click", function () {

@@ -20,8 +20,8 @@
                 <div id="result">
                     <h2>查询结果如下...</h2>
                     <h3>
-                        查询点位置 经度:<label class="ui label huge">${latitude}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        纬度:<label class="ui label huge">${longitude}</label>
+                        查询点位置 经度:<label class="ui label huge">${longitude}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        纬度:<label class="ui label huge">${latitude}</label>
                     </h3>
                 </div>
                 <div class="ui divider"></div>
@@ -63,14 +63,14 @@
             console.log(temp);
             //返回
             $(".ui.back.button").on("click", function(){
+                var path = $(location).attr("href");
 
 
-                $(location).attr("href",);
             })
 
             var tables = $("table");
-            var latitude = ${latitude};
-            var longitude = ${longitude};
+            var pixelX = ${pixelX};
+            var pixelY = ${pixelY};
             var startYear = ${startYear};
             var endYear = ${endYear};
 
@@ -81,8 +81,8 @@
                     url:"acquireSmallDataTypeResult.html",
                     async:false,
                     data:{
-                        latitude:latitude,
-                        longitude: longitude,
+                        pixelX:pixelX,
+                        pixelY: pixelY,
                         startYear: startYear,
                         endYear: endYear,
                         bigDataTypeEnglish:bigDataTypeEnglish,

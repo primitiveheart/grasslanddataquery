@@ -1,33 +1,16 @@
-<div class="ui grid userInfo">
-    <div class="ui five column row">
-        <div class="column">
-            <a href="home.html" class="admin">主页</a>
-            <a href="home.html" class="user">主页</a>
-        </div>
-        <div class="column">
-            <a href="lookupResult.html" class="user">查看结果</a>
-        </div>
-        <div class="column"><a href="addService.html" class="admin">数据管理</a></div>
-        <div class="column current_user">
-            <#if location.href?contains("admin")>
-                <#if admin != null && admin.username != null>
-                    当前用户:${admin.username}
-                </#if>
-            </#if>
-            <#if location.href?contains("admin")>
-                <#if user != null && user.username != null>
-                    当前用户:${user.username}
-                </#if>
-            </#if>
-        </div>
-        <div class="column logout">
-            <#if user != null && user.username != null>
-                <a href="logout.html">注销</a>
-            </#if>
-            <#if admin != null && admin.username != null>
-
-            </#if>
-        </div>
+<div class="ui menu userInfo">
+    <div class="header item"><img src="../resources/image/logo.jpg"></div>
+    <a href="home.html" class="item admin">主页</a>
+    <a href="home.html" class="item user">主页</a>
+    <div class="item lookupResult">
+        <a href="lookupResult.html" class="user">查看结果</a>
+    </div>
+    <div class="item dataAdmin">
+        <a href="addService.html" class="admin">数据管理</a>
+    </div>
+    <div class="right menu">
+        <div class="item current_user"></div>
+        <div class="item logout"></div>
     </div>
 </div>
 
@@ -42,6 +25,8 @@
             }
             $(".admin").hide();
             $(".user").show();
+            $(".lookupResult").show();
+            $(".dataAdmin").hide();
         }else{
             var username = "${admin.username}";
             if(username != ""){
@@ -50,6 +35,8 @@
             }
             $(".user").hide();
             $(".admin").show();
+            $(".lookupResult").hide();
+            $(".dataAdmin").show();
         }
     })
 </script>
