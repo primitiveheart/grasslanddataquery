@@ -11,13 +11,21 @@ import java.util.List;
 public interface ApplyDataMapper {
    void addApplyData(ApplyData applyData);
 
-   Integer applyDataTotal();
+   Integer applyDataTotalByCondition(@Param("queryCondition") String queryCondition);
 
-   Integer applyDataTotalByUserId(Integer integer);
+   // like '%${queryCondition}%'
+   Integer applyDataTotalByUserIdAndCondition(@Param("userId") Integer userId, @Param("queryCondition") String queryCondition);
 
-   List<ApplyData> acquiredPageData(@Param("start") Integer start, @Param("length") Integer length);
+   Integer applyDataTotalByUserId(Integer userId);
 
-   List<ApplyData> acquiredPageDataByUserId(@Param("start") Integer start, @Param("length") Integer length, @Param("userId") Integer userId);
+   List<ApplyData> acquiredPageDataByCondition(@Param("start") Integer start, @Param("length") Integer length,
+                                               @Param("queryCondition") String queryCondition);
+
+   List<ApplyData> acquiredPageDataByUserId(@Param("start") Integer start, @Param("length") Integer length,
+                                            @Param("userId") Integer userId);
+
+   List<ApplyData> acquiredPageDataByUserIdAndCondition(@Param("start") Integer start, @Param("length") Integer length,
+                                               @Param("userId") Integer userId, @Param("queryCondition") String queryCondition);
 
    void updateApplyData(ApplyData applyData);
 

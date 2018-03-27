@@ -18,6 +18,7 @@ import com.util.ToolUtils;
 import com.vo.ApplyDataVO;
 import com.vo.BigSmallDataTypeVo;
 import com.vo.DataTypeVo;
+import com.vo.DatatableCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -50,13 +51,13 @@ public class AdminApplyDataDisplayController {
 
     @RequestMapping(value = "acquireApplyData.html")
     @ResponseBody
-    public void acquireApplyData(HttpServletResponse response, @RequestParam(required = false) Integer draw,
-                                 @RequestParam(required = false) Integer start, @RequestParam(required = false)Integer length){
+    public void acquireApplyData(HttpServletResponse response, @ModelAttribute DatatableCriteria datatableCriteria){
         JSONObject result = new JSONObject();
 
-        Integer recordsTotal = applyDataMapper.applyDataTotal();
-        Integer recordsFiltered = applyDataMapper.applyDataTotal();
-        List<ApplyData> page = applyDataMapper.acquiredPageData(start, length);
+        Integer recordsTotal = applyDataMapper.applyDataTotalByCondition(datatableCriteria.getSearch().get(DatatableCriteria.SearchCriteria.value));
+        Integer recordsFiltered = applyDataMapper.applyDataTotalByCondition(datatableCriteria.getSearch().get(DatatableCriteria.SearchCriteria.value));
+        List<ApplyData> page = applyDataMapper.acquiredPageDataByCondition(datatableCriteria.getStart(),
+                datatableCriteria.getLength(), datatableCriteria.getSearch().get(DatatableCriteria.SearchCriteria.value));
 
         //获取所有的小的数据类型
         List<BigSmallDataTypeVo> bigSmallDataTypeVos = smallDataTypeMapper.getAllBigSmallDataType();
@@ -71,7 +72,7 @@ public class AdminApplyDataDisplayController {
             ToolUtils.transferEnglishToChinese(bigSmallDataTypeVos, applyDataVO);
 
             String coordinate = applyData.getCoordinate();
-            applyDataVO.setCoordinate("纬度: " + coordinate.split(";")[0] + " 经度: " + coordinate.split(";")[1]);
+            applyDataVO.setCoordinate("纬度: " + coordinate.split(";")[1] + " 经度: " + coordinate.split(";")[0]);
             data.add(applyDataVO);
         }
 

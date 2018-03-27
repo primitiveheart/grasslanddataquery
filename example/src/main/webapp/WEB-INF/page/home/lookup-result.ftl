@@ -49,6 +49,8 @@
 
        var table =  $("#applyDataDisplay").DataTable({
            "pageLength": 5,
+            "searchable":true,
+           "searching": true,
             "serverSide":true,
             "ajax": "acquireApplyData.html",
             "language":{

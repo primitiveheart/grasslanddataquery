@@ -8,15 +8,13 @@ import com.mapper.BigDataTypeMapper;
 import com.mapper.ServiceDataMapper;
 import com.mapper.SmallDataTypeMapper;
 import com.util.ResponseUtil;
+import com.vo.DatatableCriteria;
 import com.vo.SmallDataTypeVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -135,13 +133,12 @@ public class AdminAddServiceController {
 
     @RequestMapping(value = "listService.html", method = RequestMethod.POST)
     @ResponseBody
-    public void listService(HttpServletResponse response, @RequestParam(required = false) Integer draw,
-                            @RequestParam(required = false) Integer start, @RequestParam(required = false) Integer length){
+    public void listService(HttpServletResponse response, @ModelAttribute DatatableCriteria datatableCriteria){
         JSONObject result = new JSONObject();
 
         Integer recordsTotal = serviceDataMapper.serviceDataTotal();
         Integer recordsFiltered = serviceDataMapper.serviceDataTotal();
-        List<ServiceData> list = serviceDataMapper.acquiredServiceDataPageData(start, length);
+        List<ServiceData> list = serviceDataMapper.acquiredServiceDataPageData(datatableCriteria.getStart(), datatableCriteria.getLength());
 
         result.put("recordsTotal", recordsTotal);
         result.put("recordsFiltered", recordsFiltered);

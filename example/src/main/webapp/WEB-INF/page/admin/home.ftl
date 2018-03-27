@@ -51,6 +51,7 @@
 //           "sDom": '<"top"fli>rt<"bottom"p><"clear">',
            "pageLength": 5,
             "serverSide":true,
+           "searchable":true,
             "ajax": "acquireApplyData.html",
 //            "ajax":{
 //                "url":"acquireApplyData.html",

@@ -11,10 +11,11 @@ import com.util.ResponseUtil;
 import com.util.ToolUtils;
 import com.vo.ApplyDataVO;
 import com.vo.BigSmallDataTypeVo;
+import com.vo.DatatableCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,14 +46,17 @@ public class ListController {
 
     @RequestMapping(value = "acquireApplyData.html")
     @ResponseBody
-    public void acquireApplyData(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = false) Integer draw,
-                                 @RequestParam(required = false) Integer start, @RequestParam(required = false)Integer length){
+    public void acquireApplyData(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DatatableCriteria datatableCriteria){
         User existUser = (User) request.getSession().getAttribute("user");
         JSONObject result = new JSONObject();
 
-        Integer recordsTotal = applyDataMapper.applyDataTotalByUserId(existUser.getId());
-        Integer recordsFiltered = applyDataMapper.applyDataTotalByUserId(existUser.getId());
-        List<ApplyData> page = applyDataMapper.acquiredPageDataByUserId(start, length, existUser.getId());
+        Integer recordsTotal = applyDataMapper.applyDataTotalByUserIdAndCondition(existUser.getId(),
+                datatableCriteria.getSearch().get(DatatableCriteria.SearchCriteria.value));
+        Integer recordsFiltered = applyDataMapper.applyDataTotalByUserIdAndCondition(existUser.getId(),
+                datatableCriteria.getSearch().get(DatatableCriteria.SearchCriteria.value));
+        List<ApplyData> page = applyDataMapper.acquiredPageDataByUserIdAndCondition(datatableCriteria.getStart(),
+                datatableCriteria.getLength(), existUser.getId(),
+                datatableCriteria.getSearch().get(DatatableCriteria.SearchCriteria.value));
 
         //获取所有的小的数据类型
         List<BigSmallDataTypeVo> bigSmallDataTypeVos = smallDataTypeMapper.getAllBigSmallDataType();
@@ -65,7 +69,7 @@ public class ListController {
             ToolUtils.transferEnglishToChinese(bigSmallDataTypeVos, applyDataVO);
 
             String coordinate = applyData.getCoordinate();
-            applyDataVO.setCoordinate("纬度: " + coordinate.split(";")[0] + " 经度: " + coordinate.split(";")[1]);
+            applyDataVO.setCoordinate("纬度: " + coordinate.split(";")[1] + " 经度: " + coordinate.split(";")[0]);
             data.add(applyDataVO);
         }
 

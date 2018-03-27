@@ -3,7 +3,7 @@
     <a href="home.html" class="item admin">主页</a>
     <a href="home.html" class="item user">主页</a>
     <div class="item lookupResult">
-        <a href="lookupResult.html" class="user">查看结果</a>
+        <a href="lookupResult.html" class="user">我的订单</a>
     </div>
     <div class="item dataAdmin">
         <a href="addService.html" class="admin">数据管理</a>
