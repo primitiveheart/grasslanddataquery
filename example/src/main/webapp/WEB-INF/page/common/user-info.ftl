@@ -11,6 +11,9 @@
     <div class="right menu">
         <div class="item current_user"></div>
         <div class="item logout"></div>
+        <div class="item userresoure">
+            <a href="personInfo.html">个人资料</a>
+        </div>
     </div>
 </div>
 
@@ -26,6 +29,7 @@
             $(".admin").hide();
             $(".user").show();
             $(".lookupResult").show();
+            $(".userresoure").show();
             $(".dataAdmin").hide();
         }else{
             var username = "${admin.username}";
@@ -36,6 +40,7 @@
             $(".user").hide();
             $(".admin").show();
             $(".lookupResult").hide();
+            $(".userresoure").hide();
             $(".dataAdmin").show();
         }
     })

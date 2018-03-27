@@ -6,16 +6,20 @@
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
-        <result property="userType" column="user_type"></result>
-        <result property="extras" column="extras"></result>
+        <result property="userType" column="user_type"/>
+        <result property="extras" column="extras"/>
+        <result property="email" column="email"/>
+        <result property="mobilephone" column="mobilephone"/>
+        <result property="nickname" column="nickname"/>
     </resultMap>
 
     <sql id="base_column_list">
-        id, username, password, user_type, extras
+        id, username, password, user_type, extras, email, mobilephone, nickname
     </sql>
 
     <insert id="addUser" parameterType="user">
-        INSERT INTO users(username,password,user_type, extras) VALUE (#{username}, #{password},#{userType}, #{extras});
+        INSERT INTO users(username,password,user_type, extras, email, mobilephone, nickname)
+        VALUE (#{username}, #{password},#{userType}, #{extras}, #{email}, #{mobilephone}, #{nickname});
     </insert>
 
     <select id="getAllUser" resultMap="result">

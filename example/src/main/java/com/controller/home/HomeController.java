@@ -110,4 +110,15 @@ public class HomeController {
 
         return "create-order-success";
     }
+
+    @RequestMapping("personInfo.html")
+    public String personInfo(HttpServletRequest request){
+        User queryUser = (User) request.getSession().getAttribute("user");
+        if(queryUser != null){
+            User userInfo = userMapper.getUserByUsername(queryUser.getUsername());
+            request.setAttribute("userInfo", userInfo);
+        }
+
+        return "home/person-info";
+    }
 }

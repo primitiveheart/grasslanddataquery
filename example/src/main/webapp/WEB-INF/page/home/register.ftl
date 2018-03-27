@@ -18,7 +18,7 @@
             <div class="ui three column stackable grid">
                 <div class="column"></div>
                 <div class="column">
-                    <form id="login" class="ui fluid form segment">
+                    <form class="ui fluid form segment" action="registerValidation.html" method="post">
                         <div class="field">
                             <label class="">用户名</label>
                             <input type="text" name="username" placeholder=""/>
@@ -35,8 +35,12 @@
                             <label class="">电话号码</label>
                             <input type="text" name="mobilephone" placeholder=""/>
                         </div>
+                        <div class="field">
+                            <label class="">邮箱</label>
+                            <input type="text" name="email" placeholder="">
+                        </div>
                         <div class="inline field center">
-                            <a class="ui green register button">提交</a>
+                            <button class="ui blue submit button">提交</button>
                         </div>
                     </form>
                 </div>
