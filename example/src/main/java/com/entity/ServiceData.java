@@ -10,10 +10,19 @@ public class ServiceData {
     private Integer id;
     private String bigDataType;
     private String smallDataType;
+    private String workspace;
     private Integer year;
     private String layer;
     private Timestamp createTime;
     private Timestamp updateTime;
+
+    public String getWorkspace() {
+        return workspace;
+    }
+
+    public void setWorkspace(String workspace) {
+        this.workspace = workspace;
+    }
 
     public Integer getId() {
         return id;

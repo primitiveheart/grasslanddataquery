@@ -1,7 +1,7 @@
 <div class="footer_">
 </div>
 
-<script>
+<script language="JavaScript">
     $(document).ready(function(){
         var url = $(location).attr("href");
         if(!(url.indexOf("admin") >= 0)){

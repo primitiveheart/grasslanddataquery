@@ -30,4 +30,7 @@ public interface ServiceDataMapper {
      * @return
      */
     List<String> listYearBySmallDataTypeEnglish(String smallDataTypeEnglish);
+
+
+    ServiceData getServiceDataByLayer(String layer);
 }

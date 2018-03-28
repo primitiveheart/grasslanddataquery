@@ -14,5 +14,7 @@ public interface BigDataTypeMapper {
 
     void saveBigDataType(BigDataType bigDataType);
 
-    BigDataType getBigDataTypeByName(String dataTypeEnglish);
+    BigDataType getBigDataTypeByChineseName(String dataType);
+
+    BigDataType getBigDataTypeByEnglishName(String dataTypeEnglish);
 }

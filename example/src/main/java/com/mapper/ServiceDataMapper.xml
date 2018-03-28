@@ -6,6 +6,7 @@
         <result property="id" column="id"/>
         <result property="bigDataType" column="big_data_type"/>
         <result property="smallDataType" column="small_data_type"/>
+        <result property="workspace" column="workspace"/>
         <result property="year" column="year_"/>
         <result property="layer" column="layer"/>
         <result property="createTime" column="create_time"/>
@@ -13,12 +14,12 @@
     </resultMap>
 
     <sql id="base_column_list">
-        id, big_data_type, small_data_type, year_, layer, create_time, update_time
+        id, big_data_type, small_data_type, year_, layer, workspace, create_time, update_time
     </sql>
 
    <insert id="addServiceData" parameterType="serviceData">
-       INSERT INTO services(big_data_type, small_data_type, year_, layer, create_time, update_time)
-       VALUES(#{bigDataType}, #{smallDataType}, #{year}, #{layer}, #{createTime}, #{updateTime})
+       INSERT INTO services(big_data_type, small_data_type, year_, layer, workspace, create_time, update_time)
+       VALUES(#{bigDataType}, #{smallDataType}, #{year}, #{layer}, #{workspace}, #{createTime}, #{updateTime})
    </insert>
 
     <select id="serviceDataTotal" resultType="Integer">
@@ -30,7 +31,7 @@
     </select>
 
     <select id="queryServiceDataByBigAndSmallDataTypeBetweenYear" resultMap="result">
-        SELECT services.id as id, services.big_data_type as big_data_type,services.small_data_type as small_data_type, year_, layer, create_time, update_time
+        SELECT services.id as id, services.big_data_type as big_data_type,services.small_data_type as small_data_type, year_, layer, workspace, create_time, update_time
         FROM services,bigdatatypes,smalldatatypes
         WHERE services.big_data_type = bigdatatypes.data_type AND services.small_data_type = smalldatatypes.data_type
         AND bigdatatypes.data_type_english = #{bigDataType} AND smalldatatypes.data_type_english = #{smallDataType}
@@ -42,12 +43,16 @@
         and smalldatatypes.data_type_english = #{smallDataTypeEnglish} order by year_ asc
     </select>
 
+    <select id="getServiceDataByLayer" parameterType="String" resultMap="result">
+        SELECT <include refid="base_column_list"/> FROM services WHERE layer = #{layer}
+    </select>
+
     <delete id="deleteServiceData" parameterType="Integer">
         DELETE FROM services WHERE id = #{id};
     </delete>
 
     <update id="updateServiceData" parameterType="serviceData">
-        UPDATE services SET big_data_type = #{bigDataType}, small_data_type = #{smallDataType}, year_ = #{year}, layer = #{layer}, create_time = #{createTime}, update_time = #{updateTime}  WHERE id = #{id};
+        UPDATE services SET big_data_type = #{bigDataType}, small_data_type = #{smallDataType}, year_ = #{year}, layer = #{layer},workspace = #{workspace}, create_time = #{createTime}, update_time = #{updateTime}  WHERE id = #{id};
     </update>
 
 </mapper>

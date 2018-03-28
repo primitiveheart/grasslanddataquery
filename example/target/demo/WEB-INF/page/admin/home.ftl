@@ -52,15 +52,15 @@
            "pageLength": 5,
             "serverSide":true,
            "searchable":true,
-            "ajax": "acquireApplyData.html",
-//            "ajax":{
-//                "url":"acquireApplyData.html",
-//                "type":"post",
-//                "dataSrc":function(json){
-//                    console.log(json);
-//                    return json
-//                }
-//            },
+//            "ajax": "acquireApplyData.html",
+            "ajax":{
+                "url":"acquireApplyData.html",
+                "type":"post",
+                "dataSrc":function(json){
+                    console.log(json);
+                    return json.data;
+                }
+            },
             "language":{
                 "url":"../common/chinese.json"
             },

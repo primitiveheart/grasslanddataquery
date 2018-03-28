@@ -13,7 +13,7 @@ public interface SmallDataTypeMapper {
     void saveSmallDataType(SmallDataType smallDataType);
 
     /**
-     * @param id 大数据类型表的id
+     * @param bigDataTypeId 大数据类型表的id
      * @return
      */
     List<SmallDataType> listAllSmallDataType(Integer bigDataTypeId);
@@ -31,5 +31,8 @@ public interface SmallDataTypeMapper {
      * @return
      */
     List<BigSmallDataTypeVo> getAllBigSmallDataType();
+
+
+    SmallDataType getSmallDataTypeByEnglishName(@Param("bigDataTypeId") Integer bigDataTypeId, @Param("dataTypeEnglish") String dataTypeEnglish);
 
 }

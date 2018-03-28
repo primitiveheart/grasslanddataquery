@@ -16,8 +16,12 @@
         SELECT <include refid="base_column_list"/> FROM bigdatatypes;
     </select>
 
-    <select id="getBigDataTypeByName" parameterType="String" resultMap="result">
+    <select id="getBigDataTypeByEnglishName" parameterType="String" resultMap="result">
         SELECT <include refid="base_column_list"/> FROM bigdatatypes WHERE data_type_english = #{dataTypeEnglish};
+    </select>
+
+    <select id="getBigDataTypeByChineseName" parameterType="String" resultMap="result">
+        SELECT <include refid="base_column_list"/> FROM bigdatatypes WHERE data_type = #{dataType};
     </select>
 
     <insert id="saveBigDataType" parameterType="bigDataType">

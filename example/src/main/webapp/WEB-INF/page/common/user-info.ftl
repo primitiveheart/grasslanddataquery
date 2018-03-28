@@ -5,8 +5,25 @@
     <div class="item lookupResult">
         <a href="lookupResult.html" class="user">我的订单</a>
     </div>
-    <div class="item dataAdmin">
-        <a href="addService.html" class="admin">数据管理</a>
+    <div class="ui pointing dropdown link item dataAdmin">
+        <#--<a href="addService.html" class="admin">数据管理</a>-->
+        <span class="text">数据管理</span>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <div class="item"><a href="bigDataType.html">大数据类型</a></div>
+            <div class="item"><a href="smallDataType.html">小数据类型</a></div>
+            <div class="item"><a href="addServiceData.html">添加服务数据</a></div>
+            <div class="item"><a href="listServiceData.html">服务数据列表</a></div>
+        </div>
+    </div>
+    <div class="ui pointing geoverserdata dropdown link item">
+        <span class="text">geoserver数据</span>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <div class="item"><a href="workspace.html">工作区</a></div>
+            <div class="item"><a href="dataStore.html">数据存储</a></div>
+            <div class="item"><a href="layer.html">图层</a></div>
+        </div>
     </div>
     <div class="right menu">
         <div class="item current_user"></div>
@@ -31,7 +48,10 @@
             $(".lookupResult").show();
             $(".userresoure").show();
             $(".dataAdmin").hide();
+            $(".geoverserdata").hide();
         }else{
+            $(".geoverserdata").dropdown();
+            $(".dataAdmin").dropdown();
             var username = "${admin.username}";
             if(username != ""){
                 $(".current_user").html("<p>当前用户:" + username + "</p>");
@@ -42,6 +62,7 @@
             $(".lookupResult").hide();
             $(".userresoure").hide();
             $(".dataAdmin").show();
+            $(".geoverserdata").show();
         }
     })
 </script>

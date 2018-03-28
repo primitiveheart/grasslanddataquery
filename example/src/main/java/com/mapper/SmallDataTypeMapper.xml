@@ -21,9 +21,20 @@
         INSERT INTO smalldatatypes (data_type, data_type_english, big_data_type_id) VALUES (#{dataType}, #{dataTypeEnglish}, #{bigDataTypeId})
     </insert>
 
+    <select id="getSmallDataTypeByEnglishName"  resultMap="result">
+        SELECT smalldatatypes.id as id, smalldatatypes.data_type as data_type,
+         smalldatatypes.data_type_english as data_type_english, bigdatatypes.id as big_data_type_id
+          FROM smalldatatypes, bigdatatypes
+          WHERE smalldatatypes.big_data_type_id = bigdatatypes.id
+           AND bigdatatypes.id = #{bigDataTypeId}
+           AND smalldatatypes.data_type_english = #{dataTypeEnglish}
+    </select>
+
     <select id="listAllSmallDataType" parameterType="Integer" resultMap="result">
         SELECT smalldatatypes.id as id, smalldatatypes.data_type as data_type,
-         smalldatatypes.data_type_english as data_type_english, bigdatatypes.id as big_data_type_id FROM smalldatatypes, bigdatatypes WHERE smalldatatypes.big_data_type_id = bigdatatypes.id AND bigdatatypes.id = #{bigDataTypeId}
+         smalldatatypes.data_type_english as data_type_english, bigdatatypes.id as big_data_type_id
+          FROM smalldatatypes, bigdatatypes
+          WHERE smalldatatypes.big_data_type_id = bigdatatypes.id AND bigdatatypes.id = #{bigDataTypeId}
     </select>
 
     <select id="getBigSmallDataType" parameterType="String" resultMap="bSDataType">
