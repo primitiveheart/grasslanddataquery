@@ -3,6 +3,9 @@ CREATE TABLE IF NOT EXISTS users(
   username VARCHAR(30) NOT NULL ,
   password VARCHAR(20) NOT NULL ,
   user_type VARCHAR(10) NOT null,
+  mobilephone VARCHAR(11),
+  nickname VARCHAR(20),
+  email VARCHAR(30),
   extras VARCHAR(200)
 );
 
@@ -26,6 +29,7 @@ CREATE TABLE IF NOT EXISTS services(
   small_data_type VARCHAR(50) NOT NULL,
   year_ int(5) NOT NULL ,
   layer VARCHAR(40) NOT NULL ,
+  workspace VARCHAR(50) NOT NULL,
   create_time TIMESTAMP ,
   update_time TIMESTAMP
 );

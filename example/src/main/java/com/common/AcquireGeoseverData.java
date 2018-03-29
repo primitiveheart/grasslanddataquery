@@ -2,9 +2,10 @@ package com.common;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.entity.BBox;
 import com.entity.ServiceData;
-import com.util.ToolUtils;
+import it.geosolutions.geoserver.rest.GeoServerRESTReader;
+import it.geosolutions.geoserver.rest.decoder.RESTFeatureType;
+import it.geosolutions.geoserver.rest.decoder.RESTLayer;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -29,8 +30,13 @@ public class AcquireGeoseverData {
      */
     public JSONObject getBigDataType(String pixelX, String pixelY, List<ServiceData> layerName){
         JSONObject bigDataTypes = new JSONObject();
-        List<String> smallDataTypes = getSmallDataType(pixelX, pixelY, layerName);
-        bigDataTypes.put("data", smallDataTypes);
+        try{
+            List<String> smallDataTypes = getSmallDataType(pixelX, pixelY, layerName);
+            bigDataTypes.put("data", smallDataTypes);
+        }catch (Exception e){
+            //TODO
+        }
+
         return bigDataTypes;
     }
 
@@ -41,12 +47,13 @@ public class AcquireGeoseverData {
      * @param layerName
      * @return
      */
-    public List<String> getSmallDataType(String pixelX, String pixelY, List<ServiceData> layerName){
+    public List<String> getSmallDataType(String pixelX, String pixelY, List<ServiceData> layerName) throws Exception{
         List<String> smallDataTypes = new ArrayList<String>();
         for(ServiceData serviceData : layerName){
+            String workspace = serviceData.getWorkspace();
             String layer = serviceData.getLayer();
             //构建url
-            String data = buildPath(layer, pixelX , pixelY);
+            String data = buildPath(workspace, layer, pixelX , pixelY);
             //解析结果
 //            String middle_band = ToolUtils.getTemp(tempature_min);
             String middle_band = parserWMSBackData(data);
@@ -107,21 +114,43 @@ public class AcquireGeoseverData {
 
     /**
      * 构建geoserver的wms的一般路径
-     * @param layers
+     * @param workspace
+     * @param layer
      * @param pixelX
      * @param pixelY
      * @return
+     * @throws Exception
      */
-    public String buildPath(String layers, String pixelX, String pixelY) {
-        BBox bBox = new BBox(73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392);
-        String bbox  = bBox.getX() + "," + bBox.getY() + "," + bBox.getWidth() + "," + bBox.getHeight();
+    public String buildPath(String workspace, String layer, String pixelX, String pixelY) throws Exception{
+
+        String spillLayer = workspace + ":" + layer;
+        String bbox = "";
         String width = "768";
         String height = "444";
         String x = pixelX;
         String y = pixelY;
-        String url = "http://localhost:8080/grassLandCoverage/wms";
+        String url = "http://localhost:8080/" +workspace+ "/wms";
+
+        GeoServerRESTReader reader =  new GeoServerRESTReader("http://localhost:8080", "admin", "geoserver");
+        RESTLayer restLayer = reader.getLayer(workspace, layer);
+        if(restLayer != null){
+            try{
+                RESTFeatureType restFeatureType = reader.getFeatureType(restLayer);
+                double minX = restFeatureType.getMinX();
+                double minY = restFeatureType.getMinY();
+                double maxX = restFeatureType.getMaxX();
+                double maxY = restFeatureType.getMaxY();
+
+                bbox = minX + "," + minY + "," + maxX + "," + maxY;
+            }catch (Exception e){
+                //TODO
+            }
+        }
+//        BBox bBox = new BBox(73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392);
+//        String bbox  = bBox.getX() + "," + bBox.getY() + "," + bBox.getWidth() + "," + bBox.getHeight();
+
         String param = "bbox=" + bbox + "&info_format=application/json&format=application/openlayers&request=GetFeatureInfo&" +
-                "layers=" + layers + "&query_layers=" + layers + "&width=" + width + "&height=" + height + "&x=" + x + "&y=" + y;
+                "layers=" + spillLayer + "&query_layers=" + spillLayer + "&width=" + width + "&height=" + height + "&x=" + x + "&y=" + y;
         String temp = sendGet(url, param);
         return temp;
     }

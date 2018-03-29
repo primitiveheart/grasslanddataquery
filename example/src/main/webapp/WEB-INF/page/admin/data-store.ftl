@@ -23,14 +23,25 @@
 <#--页面内容-->
 <div class="content_">
     <div class="ui bottom attached segment">
-        <table id="workspace" width="100%" class="display cell-border" cellspacing="0">
+        <div class="ui header">数据存储</div>
+        <div>管理GeoServer的数据存储</div>
+        <div class="inline">
+            <i class="plus icon"></i>
+            <span><a href="newWorkspace.html">添加新的数据存储</a></span>
+        </div>
+        <div class="inline">
+            <i class="minus icon"></i>
+            <span><a>删除选定的数据存储</a></span>
+        </div>
+        <div class="ui divider"></div>
+        <table id="datastore" width="100%" class="display cell-border" cellspacing="0">
             <thead>
             <tr class="nowrap">
-                <th><input type="radio"></th>
-                <th>数据类型</th>
+                <th><input type="checkbox" class="ui checkbox all"></th>
+                <#--<th>数据类型</th>-->
                 <th>工作区</th>
                 <th>数据存储名称</th>
-                <th>类型</th>
+                <#--<th>类型</th>-->
             </tr>
             </thead>
         </table>
@@ -39,5 +50,33 @@
 </div>
 <#--引入页面底部-->
 <#include "/common/footer.ftl">
+
+<script language="javascript">
+    $(document).ready(function(){
+        var table = $("#datastore").DataTable({
+            "pageLength":5,
+            "serverSide":true,
+            "searching":false,
+            "ajax":"dataStore.json",
+            "language":{
+                "url":"../common/chinese.json"
+            },
+            "columns":[
+                {
+                    "data":function(obj){
+                        return "<input type='checkbox' class='ui checkbox single'>";
+                    }
+                },
+                {
+                    "data":"workspace"
+                },
+                {
+                    "data":"dataStore"
+                }
+            ]
+        })
+
+    })
+</script>
 </body>
 </html>

@@ -23,14 +23,39 @@
 <#--页面内容-->
 <div class="content_">
     <div class="ui bottom attached segment">
+        <div class="ui header">工作区</div>
+        <div>管理GeoServer的工作区</div>
+        <div class="inline">
+            <i class="plus icon"></i>
+            <span><a href="newWorkspace.html">添加新的工作区</a></span>
+        </div>
+        <div class="inline">
+            <i class="minus icon"></i>
+            <span><a href="#" class="delete">删除选定的工作区</a></span>
+        </div>
+        <div class="ui divider"></div>
         <table id="workspace" width="100%" class="display cell-border" cellspacing="0">
             <thead>
                 <tr class="nowrap">
-                    <th><input type="radio"></th>
+                    <th>
+                        <div class="ui checkbox">
+                            <input type="checkbox" class="all">
+                            <label>选中所有</label>
+                        </div>
+                    </th>
                     <th>工作区名称</th>
                 </tr>
             </thead>
         </table>
+    </div>
+
+    <div class="ui modal">
+        <div class="header">确定删除对象</div>
+        <div class="content">你要删除下面的对象:</div>
+        <div class="actions">
+            <div class="ui primary approve button">确定</div>
+            <div class="ui black deny button">取消</div>
+        </div>
     </div>
 
 </div>
@@ -38,46 +63,46 @@
 <#include "/common/footer.ftl">
 <script language="javascript">
     $(document).ready(function(){
+
         var table = $("#workspace").DataTable({
             "pageLength":5,
             "serverSide":true,
-            "ajax":{
-                "url":"http://localhost:8080/rest/workspaces.json",
-                "type":"get",
-                "dataType":"json",
-                "dataSrc":function(data){
-                    var workspaces = [];
-                    var len = data.workspaces.workspace.length;
-                    for(var i = 0; i < len; i++){
-                        var middle = "<a href='"+data.workspaces.workspace[i].href+"'>"+data.workspaces.workspace[i].name+"</a>"
-                        var workspace = {workspace: middle};
-                        workspaces.push(workspace);
-                    }
-//                    data = workspaces;
-                    data = {recordsFiltered:len, recordsTotal:len, data: workspaces};
-                    return data.data;
-                },
-                "headers":{
-                    "authorization": "Basic YWRtaW46Z2Vvc2VydmVy"
-                }
-            },
+            "searching":false,
+            "ajax":"workspaces.json",
             "language":{
                 "url":"../common/chinese.json"
             },
             "columns":[
                 {
                     "data":function(obj){
-                        return "<input type='radio'>";
+                        return "<input type='checkbox' class='ui checkbox single'>";
                     }
                 },
                 {
                     "data":"workspace"
-//                    "render":function(data, type, row){
-//                        console.log(obj);
-//                    }
                 }
             ]
         })
+
+       $(".workspace").on("click",".single", function(){
+           console.log(this);
+       })
+
+        $(".delete").on("click", function () {
+            $(".modal").show();
+        })
+
+       $(".all").on("click", function () {
+//           if(this.checked){
+//               $(".single").each(function(){
+//                   this.checked = true;
+//               });
+//           }else{
+//               $(".single").each(function(){
+//                   this.checked = false;
+//               });
+//           }
+       })
     })
 </script>
 </body>
