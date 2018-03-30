@@ -144,7 +144,12 @@ public class AcquireGeoseverData {
                 bbox = minX + "," + minY + "," + maxX + "," + maxY;
             }catch (Exception e){
                 //TODO
+                e.printStackTrace();
             }
+        }
+
+        if(bbox == ""){
+            bbox = "73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392";
         }
 //        BBox bBox = new BBox(73.47709197998049,18.133351135253918,134.8770919799805,53.63335113525392);
 //        String bbox  = bBox.getX() + "," + bBox.getY() + "," + bBox.getWidth() + "," + bBox.getHeight();
