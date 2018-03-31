@@ -1,35 +1,21 @@
 package com.controller.admin;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.common.AcquireGeoseverData;
 import com.entity.ApplyData;
-import com.entity.BBox;
-import com.entity.ServiceData;
 import com.entity.User;
 import com.mapper.ApplyDataMapper;
-import com.mapper.ServiceDataMapper;
 import com.mapper.SmallDataTypeMapper;
 import com.mapper.UserMapper;
-import com.util.JSONType;
 import com.util.ResponseUtil;
 import com.util.ToolUtils;
 import com.vo.ApplyDataVO;
 import com.vo.BigSmallDataTypeVo;
-import com.vo.DataTypeVo;
 import com.vo.DatatableCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.TagUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.*;
 
 /**

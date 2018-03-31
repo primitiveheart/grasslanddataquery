@@ -39,7 +39,7 @@ public class GeoserverRestController {
     public void namespacesPost(HttpServletResponse response, String name, String uri) throws Exception{
         JSONObject result = new JSONObject();
         GeoServerRESTPublisher publisher = new GeoServerRESTPublisher("http://localhost:8080", "admin", "geoserver");
-        boolean created = publisher.createWorkspace(name,new URI(uri));
+            boolean created = publisher.createWorkspace(name,new URI(uri));
         //表示创建成功
        if(created){
            result.put("msg", "success");
