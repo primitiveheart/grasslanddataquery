@@ -28,8 +28,8 @@
     <table id="listService" width="100%" class="display cell-border" cellspacing="0">
         <thead>
         <tr class="nowrap">
-            <th>大数据类型</th>
-            <th>小数据类</th>
+            <th>大类别类型</th>
+            <th>小类别类型</th>
             <th>年份</th>
             <th>工作区</th>
             <th>图层</th>
@@ -49,22 +49,22 @@
         <div class="content">
             <form class="ui form">
                 <div class="field inline">
-                    <label>大数据类型:</label>
+                    <label>大类别类型:</label>
                     <div class="ui mBigDataType selection dropdown">
                         <input type="hidden" name="bigDataType" class="bigDataType">
                         <i class="dropdown icon"></i>
-                        <div class="default text">大数据类型</div>
+                        <div class="default text">大类别类型</div>
                         <div class="menu"></div>
                     </div>
                 </div>
 
                 <div class="field inline">
-                    <label>小数据类型:</label>
+                    <label>小类别类型:</label>
                     <span class="smallDataTypeDisplay"></span>
                     <div class="ui mSmallDataType selection dropdown">
                         <input type="hidden" name="smallDataType" class="smallDataType">
                         <i class="dropdown icon"></i>
-                        <div class="default text">小数据类型</div>
+                        <div class="default text">小类别类型</div>
                         <div class="menu"></div>
                     </div>
                 </div>

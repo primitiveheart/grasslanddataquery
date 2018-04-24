@@ -13,7 +13,7 @@
     <script src="../resources/js/semantic.min.js"></script>
     <script src="../resources/js/chinese.js"></script>
 
-    <title>大数据类型</title>
+    <title>大类别类型</title>
 </head>
 <body>
 <#--引入页面头部-->
@@ -22,13 +22,13 @@
 <#--页面内容-->
 <div class="content_">
 
-        <div class="ui header">大数据类型</div>
+        <div class="ui header">大类别类型</div>
         <div class="ui divider"></div>
-        <label>数据类型(中文)</label>
+        <label>类别类型(中文)</label>
         <div class="ui input">
             <input type="text" class="bigData">
         </div>
-        <label>数据类型(英文)</label>
+        <label>类别类型(英文)</label>
         <div class="ui input">
             <input type="text" class="bigDataEnglish">
         </div>

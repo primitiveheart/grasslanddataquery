@@ -22,9 +22,9 @@
 <#--页面内容-->
 <div class="content_">
 
-    <div class="ui header">小数据类型</div>
+    <div class="ui header">小类别类型</div>
     <div class="ui divider"></div>
-    <label>大数据类型</label>
+    <label>大类别类型</label>
     <div class="ui selection dropdown bigDataType">
         <input type="hidden" name="bigDataType">
         <i class="dropdown icon"></i>
@@ -37,11 +37,11 @@
         </#if>
         </div>
     </div>
-    <label>数据类型(中文)</label>
+    <label>类别类型(中文)</label>
     <div class="ui input">
         <input type="text" class="smallData">
     </div>
-    <label>数据类型(英文)</label>
+    <label>类别类型(英文)</label>
     <div class="ui input">
         <input type="text" class="smallDataEnglish">
     </div>

@@ -7,13 +7,13 @@
     </div>
     <div class="ui pointing dropdown link item dataAdmin">
         <#--<a href="addService.html" class="admin">数据管理</a>-->
-        <span class="text">数据管理</span>
+        <span class="text">服务类别管理</span>
         <i class="dropdown icon"></i>
         <div class="menu">
-            <div class="item"><a href="bigDataType.html">大数据类型</a></div>
-            <div class="item"><a href="smallDataType.html">小数据类型</a></div>
-            <div class="item"><a href="addServiceData.html">添加服务数据</a></div>
-            <div class="item"><a href="listServiceData.html">服务数据列表</a></div>
+            <div class="item"><a href="bigDataType.html">大类别类型</a></div>
+            <div class="item"><a href="smallDataType.html">小类别类型</a></div>
+            <div class="item"><a href="addServiceData.html">添加服务类别</a></div>
+            <div class="item"><a href="listServiceData.html">服务类别列表</a></div>
         </div>
     </div>
     <div class="ui pointing geoverserdata dropdown link item">
